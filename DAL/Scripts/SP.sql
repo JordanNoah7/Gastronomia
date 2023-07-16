@@ -51,6 +51,15 @@ BEGIN
 END
 GO
 ----------------------------------------------------------------------------------------------------Listo
+--obtener una lista de categorias para el combobox
+CREATE PROCEDURE  usp_GetCategories
+AS
+    BEGIN 
+        SELECT C.ID_CATEGORIA,
+               C.NOMBRE_CATEGORIA
+        FROM CATEGORIAS C
+    END
+    GO
 --buscar ingredientes
 CREATE PROCEDURE GetIngredientByLike @like VARCHAR(15) AS
 BEGIN
