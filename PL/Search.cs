@@ -21,15 +21,13 @@ namespace PL
             Text = title;
             tbFilter.TextChanged += TextBox_TextChanged;
             dgvDatos.Columns.Clear();
-            DataTable dtPeople = new DataTable();
+            var dtPeople = new DataTable();
             dtPeople.Columns.Add("ID_PERSONA", typeof(int));
             dtPeople.Columns.Add("NOMBRES", typeof(string));
             dtPeople.Columns.Add("APELLIDO_PATERNO", typeof(string));
             dtPeople.Columns.Add("APELLIDO_MATERNO", typeof(string));
-            foreach (Person person in chefs)
-            {
+            foreach (var person in chefs)
                 dtPeople.Rows.Add(person.ID_PERSONA, person.NOMBRES, person.APELLIDO_PATERNO, person.APELLIDO_MATERNO);
-            }
             dgvDatos.DataSource = dtPeople;
             foreach (DataGridViewColumn column in dgvDatos.Columns) column.Visible = false;
             dgvDatos.Columns["ID_PERSONA"].Visible = true;
@@ -41,20 +39,17 @@ namespace PL
             dgvDatos.Columns["APELLIDO_MATERNO"].Visible = true;
             dgvDatos.Columns["APELLIDO_MATERNO"].HeaderText = "Apellido materno";
         }
-        
+
         public Search(List<Product> products, string title)
         {
             InitializeComponent();
             Text = title;
             tbFilter.TextChanged += TextBox_TextChanged;
             dgvDatos.Columns.Clear();
-            DataTable dtProducts = new DataTable();
+            var dtProducts = new DataTable();
             dtProducts.Columns.Add("ID_PRODUCTO", typeof(int));
             dtProducts.Columns.Add("NOMBRE", typeof(string));
-            foreach (Product product in products)
-            {
-                dtProducts.Rows.Add(product.ID_PRODUCTO, product.NOMBRE);
-            }
+            foreach (var product in products) dtProducts.Rows.Add(product.ID_PRODUCTO, product.NOMBRE);
             dgvDatos.DataSource = dtProducts;
             foreach (DataGridViewColumn column in dgvDatos.Columns) column.Visible = false;
             dgvDatos.Columns["ID_PRODUCTO"].Visible = true;
@@ -89,7 +84,7 @@ namespace PL
 
         private void TextBox_TextChanged(object sender, EventArgs e)
         {
-            string filter = tbFilter.Text;
+            var filter = tbFilter.Text;
             switch (Text)
             {
                 case "Chefs":

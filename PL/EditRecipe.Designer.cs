@@ -202,10 +202,10 @@ namespace PL
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(6, 19);
+            this.textBox4.Location = new System.Drawing.Point(9, 9);
             this.textBox4.Multiline = true;
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(374, 20);
+            this.textBox4.Size = new System.Drawing.Size(374, 80);
             this.textBox4.TabIndex = 3;
             // 
             // bAddStep
@@ -367,7 +367,6 @@ namespace PL
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         private System.Windows.Forms.TextBox tbCookingTime;

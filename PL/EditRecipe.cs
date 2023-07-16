@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using BLL;
 
 namespace PL
 {
@@ -7,6 +8,7 @@ namespace PL
     {
         private readonly Home _form;
         private readonly int _id;
+        private readonly RecipeService _recipeService = new RecipeService();
 
         public EditRecipe()
         {
@@ -22,7 +24,8 @@ namespace PL
 
         private void EditRecipe_Load(object sender, EventArgs e)
         {
-            tbRecipeName.Text = _id.ToString();
+            ML.Recipe mRecipe = _recipeService.GetRecipe(_id);
+            
         }
 
         private void bCancel_Click(object sender, EventArgs e)

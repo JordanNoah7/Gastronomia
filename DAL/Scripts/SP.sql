@@ -157,6 +157,40 @@ BEGIN
 END
 GO
 ----------------------------------------------------------------------------------------------------Listo
+--Procedimiento para obtener una receta
+CREATE PROCEDURE usp_GetRecipe @IDReceta INT
+AS
+BEGIN
+    BEGIN TRAN;
+    BEGIN TRY
+        SELECT
+            NOMBRE_RECETA,
+            Descripcion,
+            Tiempo_Preparacion,
+            Tiempo_Coccion,
+            Porciones,
+            Dificultad,
+            ID_CATEGORIA,
+            ID_PERSONA
+        FROM RECETAS
+        WHERE ID_RECETA = @IDReceta;
+
+        SELECT i.ID_INGREDIENTE, P.NOMBRE, i.CANTIDAD, u.ID_UNIDAD_MEDIDA
+        FROM Ingredientes i
+                 JOIN UNIDAD_MEDIDA u ON i.ID_Unidad_Medida = u.ID_UNIDAD_MEDIDA
+                 JOIN PRODUCTOS P on P.ID_PRODUCTO = i.ID_INGREDIENTE
+        WHERE i.ID_Receta = @IDReceta;
+
+        SELECT ID_PASO, Descripcion
+        FROM PREPARACION
+        WHERE ID_Receta = @IDReceta;
+        COMMIT TRAN;
+    END TRY
+    BEGIN CATCH 
+        ROLLBACK TRAN;
+    END CATCH 
+END
+GO
 --buscar ingredientes
 CREATE PROCEDURE GetIngredientByLike @like VARCHAR(15) AS
 BEGIN
@@ -165,33 +199,6 @@ BEGIN
     WHERE NOMBRE LIKE @like
 END
 GO
---Procedimiento para obtener una receta
-CREATE PROCEDURE GetRecipe @IDReceta INT
-AS
-BEGIN
-    SELECT ID_RECETA,
-           NOMBRE_RECETA,
-           Descripcion,
-           Tiempo_Preparacion,
-           Tiempo_Coccion,
-           Porciones,
-           Dificultad,
-           ID_CATEGORIA,
-           ID_PERSONA
-    FROM RECETAS
-    WHERE ID_RECETA = @IDReceta;
-
-    SELECT i.ID_Ingrediente, i.Cantidad, u.Nombre AS Unidad_Medida
-    FROM Ingredientes i
-             INNER JOIN UNIDAD_MEDIDA u ON i.ID_Unidad_Medida = u.ID_UNIDAD_MEDIDA
-    WHERE i.ID_Receta = @IDReceta;
-
-    SELECT ID_PASO, Descripcion
-    FROM PREPARACION
-    WHERE ID_Receta = @IDReceta;
-END
-GO
-
 --Procedimiento para actualizar la receta
 CREATE PROCEDURE UpdateRecipe @idReceta INT,
                               @nombre Varchar(30),

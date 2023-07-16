@@ -94,5 +94,51 @@ namespace DAL
                 }
             }
         }
+
+        public Recipe GetRecipe(int id)
+        {
+            Recipe recipe = new Recipe();
+            using (var cnDb = Connection.GetConnection())
+            {
+                try
+                {
+                    using (var cmd = new SqlCommand("usp_GetRecipe", cnDb))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@IDReceta", id);
+                        Connection.OpenConnection();
+                        using (var dr = cmd.ExecuteReader())
+                        {
+                            if (dr.Read())
+                            {
+                                recipe.ID_RECETA = id;
+                                recipe.NOMBRE_RECETA = dr["NOMBRE_RECETA"].ToString();
+                                recipe.DESCRIPCION = dr["Descripcion"].ToString();
+                                recipe.TIEMPO_PREPARACION = dr["Tiempo_Preparacion"].ToString();
+                                recipe.TIEMPO_COCCION = dr["Tiempo_Coccion"].ToString();
+                                recipe.PORCIONES = Convert.ToByte(dr["Porciones"]);
+                                recipe.DIFICULTAD = Convert.ToByte(dr["Dificultad"]);
+                                recipe.ID_CATEGORIA = Convert.ToInt32(dr["ID_CATEGORIA"]);
+                                recipe.ID_PERSONA = Convert.ToInt32(dr["ID_PERSONA"]);
+                            }
+
+                            dr.NextResult();
+                            recipe.Ingredientes.Load(dr);
+                            dr.NextResult();
+                            recipe.Preparacion.Load(dr);
+                        }
+                        Connection.CloseConnection();
+                    }
+
+                    return recipe;
+                }
+                catch (Exception e)
+                {
+                    Connection.CloseConnection();
+                    return null;
+                }
+            }
+        }
     }
 }

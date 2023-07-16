@@ -23,14 +23,13 @@ namespace DAL
                         using (var dr = cmd.ExecuteReader())
                         {
                             while (dr.Read())
-                            {
-                                categoryList.Add(new Category()
+                                categoryList.Add(new Category
                                 {
                                     ID_CATEGORIA = Convert.ToInt32(dr["ID_CATEGORIA"]),
                                     NOMBRE_CATEGORIA = dr["NOMBRE_CATEGORIA"].ToString()
                                 });
-                            }
                         }
+
                         Connection.CloseConnection();
                     }
 

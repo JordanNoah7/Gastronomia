@@ -7,7 +7,7 @@ namespace BLL
 {
     public class UnitMeasureService
     {
-        private UnitMeasureRepository _unitMeasureRepository = new UnitMeasureRepository();
+        private readonly UnitMeasureRepository _unitMeasureRepository = new UnitMeasureRepository();
 
         public List<UnitMeasure> GetUnitMeasures()
         {

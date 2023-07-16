@@ -22,5 +22,10 @@ namespace BLL
         {
             return _recipeRepository.DeleteRecipe(id);
         }
+
+        public Recipe GetRecipe(int id)
+        {
+            return _recipeRepository.GetRecipe(id);
+        }
     }
 }

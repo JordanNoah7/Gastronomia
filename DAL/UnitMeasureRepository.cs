@@ -23,14 +23,13 @@ namespace DAL
                         using (var dr = cmd.ExecuteReader())
                         {
                             while (dr.Read())
-                            {
-                                unitMeasureList.Add(new UnitMeasure()
+                                unitMeasureList.Add(new UnitMeasure
                                 {
                                     ID_UNIDAD_MEDIDA = Convert.ToInt32(dr["ID_UNIDAD_MEDIDA"]),
                                     ABREVIATURA = dr["ABREVIATURA"].ToString()
                                 });
-                            }
                         }
+
                         Connection.CloseConnection();
                     }
 

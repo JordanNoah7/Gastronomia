@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
@@ -9,14 +8,14 @@ namespace PL
 {
     public partial class AddRecipe : Form
     {
-        private readonly Home _form;
-        private int i = 2;
-        private int location_y;
         private readonly CategoryService _categoryService = new CategoryService();
-        private readonly RecipeService _recipeService = new RecipeService();
+        private readonly Home _form;
         private readonly PersonService _personService = new PersonService();
         private readonly ProductService _productService = new ProductService();
+        private readonly RecipeService _recipeService = new RecipeService();
         private readonly UnitMeasureService _unitMeasureService = new UnitMeasureService();
+        private int i = 2;
+        private int location_y;
 
         public AddRecipe()
         {
@@ -35,7 +34,7 @@ namespace PL
             cbCategory.DisplayMember = "NOMBRE_CATEGORIA";
             cbCategory.ValueMember = "ID_CATEGORIA";
 
-            DataTable dtDifficulty = new DataTable();
+            var dtDifficulty = new DataTable();
             dtDifficulty.Columns.Add("Value");
             dtDifficulty.Columns.Add("Display");
 
@@ -148,7 +147,7 @@ namespace PL
             recipe.DIFICULTAD = Convert.ToByte(cbDifficulty.SelectedValue);
             recipe.ID_CATEGORIA = Convert.ToInt32(cbCategory.SelectedValue);
             recipe.ID_PERSONA = Convert.ToInt32(tbIdAutor.Text);
-            
+
             recipe.Ingredientes.Columns.Add("ID_INGREDIENTE", typeof(int));
             recipe.Ingredientes.Columns.Add("CANTIDAD", typeof(float));
             recipe.Ingredientes.Columns.Add("ID_UNIDAD_MEDIDA", typeof(int));
@@ -169,13 +168,15 @@ namespace PL
 
             if (_recipeService.AddRecipe(recipe))
             {
-                MessageBox.Show("La receta se agregó correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Recipe fRecipe = new Recipe(_form);
+                MessageBox.Show("La receta se agregó correctamente.", "Éxito", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                var fRecipe = new Recipe(_form);
                 _form.OpenForm(fRecipe);
             }
             else
             {
-                MessageBox.Show("Hubo un error al agregar la receta.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Hubo un error al agregar la receta.", "Error", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
     }

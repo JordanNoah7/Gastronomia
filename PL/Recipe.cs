@@ -61,12 +61,15 @@ namespace PL
                 {
                     if (_recipeService.DeleteRecipe(id))
                     {
-                        MessageBox.Show("La receta se eliminó correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("La receta se eliminó correctamente.", "Éxito", MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+                        Recipe fRecipe = new Recipe(_form);
+                        _form.OpenForm(fRecipe);
                     }
+
                     else
-                    {
-                        MessageBox.Show("Hubo un error al eliminar la receta.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                        MessageBox.Show("Hubo un error al eliminar la receta.", "Error", MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
                 }
             }
             else if (e.ColumnIndex == dgvRecipes.Columns["Editar"].Index)

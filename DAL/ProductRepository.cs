@@ -23,14 +23,13 @@ namespace DAL
                         using (var dr = cmd.ExecuteReader())
                         {
                             while (dr.Read())
-                            {
-                                productList.Add(new Product()
+                                productList.Add(new Product
                                 {
                                     ID_PRODUCTO = Convert.ToInt32(dr["ID_PRODUCTO"]),
                                     NOMBRE = dr["NOMBRE"].ToString()
                                 });
-                            }
                         }
+
                         Connection.CloseConnection();
                     }
 
