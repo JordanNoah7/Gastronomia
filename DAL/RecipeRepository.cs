@@ -19,8 +19,8 @@ namespace DAL
                         cmd.Parameters.Clear();
                         Connection.OpenConnection();
                         SqlDataReader dr = cmd.ExecuteReader();
+                        dt.Load(dr, LoadOption.OverwriteChanges);
                         Connection.CloseConnection();
-                        dt.Load(dr);
                     }
 
                     return dt;

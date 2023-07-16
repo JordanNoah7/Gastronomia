@@ -46,6 +46,12 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="AddRecipe.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Include="AddRecipe.Designer.cs">
+          <DependentUpon>AddRecipe.cs</DependentUpon>
+        </Compile>
         <Compile Include="Home.cs">
             <SubType>Form</SubType>
         </Compile>
@@ -66,6 +72,15 @@
         <Compile Include="Recipe.Designer.cs">
           <DependentUpon>Recipe.cs</DependentUpon>
         </Compile>
+        <Compile Include="Search.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Include="Search.Designer.cs">
+          <DependentUpon>Search.cs</DependentUpon>
+        </Compile>
+        <EmbeddedResource Include="AddRecipe.resx">
+          <DependentUpon>AddRecipe.cs</DependentUpon>
+        </EmbeddedResource>
         <EmbeddedResource Include="Home.resx">
             <DependentUpon>Home.cs</DependentUpon>
         </EmbeddedResource>
@@ -83,6 +98,9 @@
         </Compile>
         <EmbeddedResource Include="Recipe.resx">
           <DependentUpon>Recipe.cs</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Search.resx">
+          <DependentUpon>Search.cs</DependentUpon>
         </EmbeddedResource>
         <None Include="Properties\Settings.settings">
             <Generator>SettingsSingleFileGenerator</Generator>
