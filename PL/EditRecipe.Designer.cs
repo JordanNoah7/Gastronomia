@@ -2,7 +2,7 @@
 
 namespace PL
 {
-    partial class AddRecipe
+    partial class EditRecipe
     {
         /// <summary>
         /// Required designer variable.
@@ -39,6 +39,7 @@ namespace PL
             this.bCancel = new System.Windows.Forms.Button();
             this.bAddIngredient = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.tbIdAutor = new System.Windows.Forms.TextBox();
@@ -59,10 +60,10 @@ namespace PL
             this.tbDescription = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.cbDifficulty = new System.Windows.Forms.ComboBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.tbIdRecipe = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -72,7 +73,7 @@ namespace PL
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(140, 20);
             this.label1.TabIndex = 0;
-            this.label1.Text = "AÑADIR RECETA";
+            this.label1.Text = "EDITAR RECETA";
             // 
             // bSave
             // 
@@ -137,6 +138,16 @@ namespace PL
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(392, 300);
             this.panel1.TabIndex = 13;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToResizeRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(392, 300);
+            this.dataGridView1.TabIndex = 0;
             // 
             // label4
             // 
@@ -305,21 +316,20 @@ namespace PL
             this.cbDifficulty.Size = new System.Drawing.Size(185, 21);
             this.cbDifficulty.TabIndex = 32;
             // 
-            // dataGridView1
+            // tbIdRecipe
             // 
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(392, 300);
-            this.dataGridView1.TabIndex = 0;
+            this.tbIdRecipe.Location = new System.Drawing.Point(173, 10);
+            this.tbIdRecipe.Name = "tbIdRecipe";
+            this.tbIdRecipe.Size = new System.Drawing.Size(32, 20);
+            this.tbIdRecipe.TabIndex = 33;
+            this.tbIdRecipe.Visible = false;
             // 
-            // AddRecipe
+            // EditRecipe
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.tbIdRecipe);
             this.Controls.Add(this.cbDifficulty);
             this.Controls.Add(this.tbDescription);
             this.Controls.Add(this.label11);
@@ -347,14 +357,14 @@ namespace PL
             this.Controls.Add(this.label2);
             this.Controls.Add(this.bSave);
             this.Controls.Add(this.label1);
-            this.Name = "AddRecipe";
+            this.Name = "EditRecipe";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AddRecipe";
-            this.Load += new System.EventHandler(this.AddRecipe_Load);
+            this.Load += new System.EventHandler(this.EditRecipe_Load);
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -398,5 +408,6 @@ namespace PL
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox cbDifficulty;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.TextBox tbIdRecipe;
     }
 }

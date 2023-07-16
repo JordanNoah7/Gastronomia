@@ -54,9 +54,18 @@ namespace PL
         {
             if (e.ColumnIndex == dgvRecipes.Columns["Eliminar"].Index)
             {
+                int id = Convert.ToInt32(dgvRecipes.CurrentRow.Cells["Nro"].Value);
+                DialogResult result = MessageBox.Show("¿Está seguro que desea eliminar esta receta?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    MessageBox.Show(id.ToString());
+                }
             }
             else if (e.ColumnIndex == dgvRecipes.Columns["Editar"].Index)
             {
+                int id = Convert.ToInt32(dgvRecipes.CurrentRow.Cells["Nro"].Value);
+                EditRecipe editRecipe = new EditRecipe(_form, id);
+                _form.OpenForm(editRecipe);
             }
         }
 

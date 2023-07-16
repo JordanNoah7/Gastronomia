@@ -1,28 +1,35 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using BLL;
 
 namespace PL
 {
-    public partial class AddRecipe : Form
+    public partial class EditRecipe : Form
     {
-        private readonly PersonService _personService = new PersonService();
         private Home _form;
+        private int _id;
 
-        public AddRecipe()
+        public EditRecipe()
         {
             InitializeComponent();
         }
-        
-        public AddRecipe(Home form)
+
+        public EditRecipe(Home form, int id)
         {
             _form = form;
+            _id = id;
             InitializeComponent();
         }
 
-        private void AddRecipe_Load(object sender, EventArgs e)
+        private void EditRecipe_Load(object sender, EventArgs e)
         {
-
+            tbRecipeName.Text = _id.ToString();
         }
 
         private void bCancel_Click(object sender, EventArgs e)
