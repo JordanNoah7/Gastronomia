@@ -7,8 +7,8 @@ namespace PL
 {
     public partial class Recipe : Form
     {
-        private readonly RecipeService _recipeService = new RecipeService();
         private readonly Home _form;
+        private readonly RecipeService _recipeService = new RecipeService();
 
         public Recipe()
         {
@@ -54,17 +54,15 @@ namespace PL
         {
             if (e.ColumnIndex == dgvRecipes.Columns["Eliminar"].Index)
             {
-                int id = Convert.ToInt32(dgvRecipes.CurrentRow.Cells["Nro"].Value);
-                DialogResult result = MessageBox.Show("¿Está seguro que desea eliminar esta receta?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    MessageBox.Show(id.ToString());
-                }
+                var id = Convert.ToInt32(dgvRecipes.CurrentRow.Cells["Nro"].Value);
+                var result = MessageBox.Show("¿Está seguro que desea eliminar esta receta?", "Confirmación",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes) MessageBox.Show(id.ToString());
             }
             else if (e.ColumnIndex == dgvRecipes.Columns["Editar"].Index)
             {
-                int id = Convert.ToInt32(dgvRecipes.CurrentRow.Cells["Nro"].Value);
-                EditRecipe editRecipe = new EditRecipe(_form, id);
+                var id = Convert.ToInt32(dgvRecipes.CurrentRow.Cells["Nro"].Value);
+                var editRecipe = new EditRecipe(_form, id);
                 _form.OpenForm(editRecipe);
             }
         }

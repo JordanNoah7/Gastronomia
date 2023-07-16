@@ -38,7 +38,8 @@ CREATE TABLE [CATEGORIAS]
     [DESCRIPCION]      Varchar(250)    NOT NULL
 )
 go
-insert into CATEGORIAS (NOMBRE_CATEGORIA, DESCRIPCION) values ('Parrillas', 'Todo tipo de parrillas.')
+insert into CATEGORIAS (NOMBRE_CATEGORIA, DESCRIPCION)
+values ('Parrillas', 'Todo tipo de parrillas.')
 -- Add keys for table CATEGORIAS
 
 ALTER TABLE [CATEGORIAS]

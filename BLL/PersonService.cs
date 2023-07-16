@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿using System.Collections.Generic;
+using DAL;
 using ML;
 
 namespace BLL
@@ -15,6 +16,11 @@ namespace BLL
         public Person GetPerson(string username, string password)
         {
             return _personRepository.GetPerson(username, password);
+        }
+
+        public List<Person> GetChefsByLike(string like)
+        {
+            return _personRepository.GetChefsByLike(like);
         }
     }
 }

@@ -22,7 +22,6 @@ namespace PL
             pVentana.Controls.Clear();
             form.TopLevel = false;
             form.FormBorderStyle = FormBorderStyle.None;
-            //form.Dock = DockStyle.Fill;
             pVentana.Controls.Add(form);
             form.Location = new Point(0, 0);
             form.Anchor = pVentana.Anchor;

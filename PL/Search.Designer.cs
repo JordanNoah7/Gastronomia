@@ -62,6 +62,7 @@ namespace PL
             this.bAccept.TabIndex = 2;
             this.bAccept.Text = "Aceptar";
             this.bAccept.UseVisualStyleBackColor = true;
+            this.bAccept.Click += new System.EventHandler(this.bAccept_Click);
             // 
             // bCancel
             // 
@@ -71,6 +72,7 @@ namespace PL
             this.bCancel.TabIndex = 3;
             this.bCancel.Text = "Cancelar";
             this.bCancel.UseVisualStyleBackColor = true;
+            this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
             // 
             // Search
             // 
@@ -82,6 +84,7 @@ namespace PL
             this.Controls.Add(this.dgvDatos);
             this.Controls.Add(this.textBox1);
             this.Name = "Search";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Search";
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatos)).EndInit();
             this.ResumeLayout(false);

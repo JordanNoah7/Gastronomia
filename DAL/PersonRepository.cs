@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using ML;
@@ -73,6 +74,44 @@ namespace DAL
                     return person;
                 }
                 catch (Exception ex)
+                {
+                    Connection.CloseConnection();
+                    return null;
+                }
+            }
+        }
+
+        public List<Person> GetChefsByLike(string like)
+        {
+            var chefList = new List<Person>();
+            using (var cnDb = Connection.GetConnection())
+            {
+                try
+                {
+                    using (var cmd = new SqlCommand("usp_GetChefByLike", cnDb))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@like", like);
+                        Connection.OpenConnection();
+                        using (var dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                                chefList.Add(new Person
+                                {
+                                    ID_PERSONA = Convert.ToInt32(dr["ID_PERSONA"]),
+                                    NOMBRES = dr["NOMBRES"].ToString(),
+                                    APELLIDO_PATERNO = dr["APELLIDO_PATERNO"].ToString(),
+                                    APELLIDO_MATERNO = dr["APELLIDO_MATERNO"].ToString()
+                                });
+                        }
+
+                        Connection.CloseConnection();
+                    }
+
+                    return chefList;
+                }
+                catch (Exception e)
                 {
                     Connection.CloseConnection();
                     return null;

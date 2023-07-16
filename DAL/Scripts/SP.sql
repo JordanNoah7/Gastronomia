@@ -35,15 +35,22 @@ BEGIN
 END
 GO
 ----------------------------------------------------------------------------------------------------Listo
---Buscar recetas
-CREATE PROCEDURE GetRecipeByLike @like Varchar(15) AS
+--Buscar chefs por like
+ALTER PROCEDURE usp_GetChefByLike @like Varchar(15) AS
 BEGIN
-    SELECT ID_RECETA, NOMBRE_RECETA
-    FROM RECETAS
-    WHERE NOMBRE_RECETA LIKE @like
+    SELECT P.ID_PERSONA,
+           P.NOMBRES,
+           P.APELLIDO_PATERNO,
+           P.APELLIDO_MATERNO
+    FROM PERSONAS P
+             JOIN CARGO_PERSONA CP on P.ID_PERSONA = CP.ID_PERSONA
+    WHERE CP.ID_CARGO = 1
+      AND (P.NOMBRES LIKE '%' + @like + '%'
+        OR P.APELLIDO_PATERNO LIKE '%' + @like + '%'
+        OR P.APELLIDO_MATERNO LIKE '%' + @like + '%');
 END
 GO
-
+----------------------------------------------------------------------------------------------------Listo
 --buscar ingredientes
 CREATE PROCEDURE GetIngredientByLike @like VARCHAR(15) AS
 BEGIN
@@ -54,16 +61,16 @@ END
 GO
 
 --Procedimiento para agregar receta
-CREATE PROCEDURE AddRecipe @nombre Varchar(30),
-                           @descripcion Varchar(250),
-                           @tiempo_preparacion Varchar(10),
-                           @tiempo_coccion Varchar(10),
-                           @porciones Smallint,
-                           @dificultad Smallint,
-                           @id_categoria Bigint,
-                           @id_persona Bigint,
-                           @ingredientes XML,
-                           @preparacion XML
+CREATE PROCEDURE usp_AddRecipe @nombre Varchar(30),
+                               @descripcion Varchar(250),
+                               @tiempo_preparacion Varchar(10),
+                               @tiempo_coccion Varchar(10),
+                               @porciones Smallint,
+                               @dificultad Smallint,
+                               @id_categoria Bigint,
+                               @id_persona Bigint,
+                               @ingredientes XML,
+                               @preparacion XML
 AS
 BEGIN
     DECLARE @ID_Receta BIGINT;
