@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Drawing;
 using System.Windows.Forms;
 using BLL;
 
@@ -9,21 +8,29 @@ namespace PL
     public partial class Recipe : Form
     {
         private readonly RecipeService _recipeService = new RecipeService();
+        private readonly Home _form;
+
         public Recipe()
         {
             InitializeComponent();
         }
 
+        public Recipe(Home form)
+        {
+            _form = form;
+            InitializeComponent();
+        }
+
         private void Recipe_Load(object sender, EventArgs e)
         {
-            DataGridViewButtonColumn dgvbcUpdate = new DataGridViewButtonColumn();
+            var dgvbcUpdate = new DataGridViewButtonColumn();
             dgvbcUpdate.Name = "Editar";
             dgvbcUpdate.HeaderText = "Editar";
             dgvbcUpdate.Text = "-";
             dgvbcUpdate.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             dgvbcUpdate.UseColumnTextForButtonValue = true;
 
-            DataGridViewButtonColumn dgvbcDelete = new DataGridViewButtonColumn();
+            var dgvbcDelete = new DataGridViewButtonColumn();
             dgvbcDelete.Name = "Eliminar";
             dgvbcDelete.HeaderText = "Eliminar";
             dgvbcDelete.Text = "X";
@@ -45,31 +52,24 @@ namespace PL
 
         private void DataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(e.ColumnIndex == dgvRecipes.Columns["Eliminar"].Index)
+            if (e.ColumnIndex == dgvRecipes.Columns["Eliminar"].Index)
             {
-
             }
             else if (e.ColumnIndex == dgvRecipes.Columns["Editar"].Index)
             {
-
             }
         }
 
         private void TextBox_TextChanged(object sender, EventArgs e)
         {
-            string filter = tbFilter.Text;
+            var filter = tbFilter.Text;
             (dgvRecipes.DataSource as DataTable).DefaultView.RowFilter = $"Receta LIKE '%{filter}%'";
         }
 
         private void bAddRecipe_Click(object sender, EventArgs e)
         {
-            AddRecipe addRecipe = new AddRecipe();
-            addRecipe.TopLevel = true;
-            addRecipe.FormBorderStyle = FormBorderStyle.None;
-            //pVentana.Controls.Add(recipe);
-            //recipe.Location = new Point(0, 0);
-            //recipe.Anchor = pVentana.Anchor;
-            addRecipe.ShowDialog();
+            var addRecipe = new AddRecipe(_form);
+            _form.OpenForm(addRecipe);
         }
     }
 }

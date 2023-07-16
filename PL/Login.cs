@@ -7,9 +7,8 @@ namespace PL
 {
     public partial class Login : Form
     {
-        private Person _person;
-
         private readonly PersonService _personService = new PersonService();
+        private Person _person;
 
         public Login()
         {

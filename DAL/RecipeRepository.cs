@@ -8,7 +8,7 @@ namespace DAL
     {
         public DataTable GetRecipes()
         {
-            DataTable dt = new DataTable();
+            var dt = new DataTable();
             using (var cnDb = Connection.GetConnection())
             {
                 try
@@ -18,14 +18,14 @@ namespace DAL
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Clear();
                         Connection.OpenConnection();
-                        SqlDataReader dr = cmd.ExecuteReader();
+                        var dr = cmd.ExecuteReader();
                         dt.Load(dr, LoadOption.OverwriteChanges);
                         Connection.CloseConnection();
                     }
 
                     return dt;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Connection.CloseConnection();
                     return null;

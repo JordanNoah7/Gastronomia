@@ -9,7 +9,7 @@ namespace PL
         {
             InitializeComponent();
         }
-        
+
         public Search(DataTable dt, string title)
         {
             InitializeComponent();

@@ -51,6 +51,10 @@ namespace PL
             this.panel2 = new System.Windows.Forms.Panel();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -93,7 +97,7 @@ namespace PL
             // label3
             // 
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label3.Location = new System.Drawing.Point(12, 108);
+            this.label3.Location = new System.Drawing.Point(12, 267);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(140, 20);
             this.label3.TabIndex = 4;
@@ -141,7 +145,7 @@ namespace PL
             // 
             // bAddIngredient
             // 
-            this.bAddIngredient.Location = new System.Drawing.Point(122, 105);
+            this.bAddIngredient.Location = new System.Drawing.Point(122, 264);
             this.bAddIngredient.Name = "bAddIngredient";
             this.bAddIngredient.Size = new System.Drawing.Size(30, 23);
             this.bAddIngredient.TabIndex = 12;
@@ -155,7 +159,7 @@ namespace PL
             this.panel1.Controls.Add(this.textBox1);
             this.panel1.Controls.Add(this.textBox2);
             this.panel1.Controls.Add(this.textBox3);
-            this.panel1.Location = new System.Drawing.Point(0, 131);
+            this.panel1.Location = new System.Drawing.Point(0, 290);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(392, 200);
             this.panel1.TabIndex = 13;
@@ -163,7 +167,7 @@ namespace PL
             // label4
             // 
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label4.Location = new System.Drawing.Point(398, 108);
+            this.label4.Location = new System.Drawing.Point(398, 267);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(140, 20);
             this.label4.TabIndex = 14;
@@ -206,7 +210,7 @@ namespace PL
             // 
             this.panel2.AutoScroll = true;
             this.panel2.Controls.Add(this.textBox4);
-            this.panel2.Location = new System.Drawing.Point(392, 131);
+            this.panel2.Location = new System.Drawing.Point(392, 290);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(392, 200);
             this.panel2.TabIndex = 14;
@@ -221,18 +225,54 @@ namespace PL
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(485, 105);
+            this.button1.Location = new System.Drawing.Point(485, 264);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(30, 23);
             this.button1.TabIndex = 19;
             this.button1.Text = "+";
             this.button1.UseVisualStyleBackColor = true;
             // 
+            // label6
+            // 
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label6.Location = new System.Drawing.Point(12, 87);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(116, 20);
+            this.label6.TabIndex = 20;
+            this.label6.Text = "Dificultad";
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(135, 86);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(185, 20);
+            this.textBox5.TabIndex = 21;
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(135, 112);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(185, 20);
+            this.textBox6.TabIndex = 23;
+            // 
+            // label7
+            // 
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label7.Location = new System.Drawing.Point(12, 107);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(116, 20);
+            this.label7.TabIndex = 22;
+            this.label7.Text = "Dificultad";
+            // 
             // AddRecipe
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.textBox6);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.bSearchAutor);
@@ -258,6 +298,12 @@ namespace PL
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.Label label7;
+
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBox5;
 
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;

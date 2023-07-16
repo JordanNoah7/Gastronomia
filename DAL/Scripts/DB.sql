@@ -18,8 +18,11 @@ CREATE TABLE [RECETAS]
     [ID_PERSONA]         Bigint          NOT NULL
 )
 go
-insert into RECETAS (NOMBRE_RECETA, DESCRIPCION, TIEMPO_PREPARACION, TIEMPO_COCCION, PORCIONES, DIFICULTAD, ID_CATEGORIA, ID_PERSONA)
-values ('Brownies de chocolate', 'Un brownie es un bizcocho de chocolate pequeño, típico de la gastronomía de Estados Unidos.', '30 minutos', '25 minutos', 4, 3, 1, 1)
+insert into RECETAS (NOMBRE_RECETA, DESCRIPCION, TIEMPO_PREPARACION, TIEMPO_COCCION, PORCIONES, DIFICULTAD,
+                     ID_CATEGORIA, ID_PERSONA)
+values ('Brownies de chocolate',
+        'Un brownie es un bizcocho de chocolate pequeño, típico de la gastronomía de Estados Unidos.', '30 minutos',
+        '25 minutos', 4, 3, 1, 1)
 -- Add keys for table RECETAS
 
 ALTER TABLE [RECETAS]
@@ -355,9 +358,9 @@ GO
 CREATE PROCEDURE usp_GetRecipes
 AS
 BEGIN
-    SELECT R.ID_RECETA Nro,
+    SELECT R.ID_RECETA     Nro,
            R.NOMBRE_RECETA Receta,
-           P.NOMBRES Autor
+           P.NOMBRES       Autor
     FROM RECETAS AS R
              JOIN PERSONAS AS P on R.ID_PERSONA = P.ID_PERSONA
 END
