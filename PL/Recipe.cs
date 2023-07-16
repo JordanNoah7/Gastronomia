@@ -57,7 +57,17 @@ namespace PL
                 var id = Convert.ToInt32(dgvRecipes.CurrentRow.Cells["Nro"].Value);
                 var result = MessageBox.Show("¿Está seguro que desea eliminar esta receta?", "Confirmación",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes) MessageBox.Show(id.ToString());
+                if (result == DialogResult.Yes)
+                {
+                    if (_recipeService.DeleteRecipe(id))
+                    {
+                        MessageBox.Show("La receta se eliminó correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Hubo un error al eliminar la receta.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
             else if (e.ColumnIndex == dgvRecipes.Columns["Editar"].Index)
             {

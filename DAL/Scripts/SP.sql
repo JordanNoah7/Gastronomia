@@ -138,6 +138,25 @@ BEGIN
 END
 GO
 ----------------------------------------------------------------------------------------------------Listo
+--eliminar receta
+CREATE PROCEDURE usp_DeleteRecipe @idReceta INT
+AS
+BEGIN
+    BEGIN TRAN;
+    BEGIN TRY
+        DELETE FROM INGREDIENTES WHERE id_receta = @idReceta;
+
+        DELETE FROM PREPARACION WHERE id_receta = @idReceta;
+
+        DELETE FROM RECETAS WHERE ID_RECETA = @idReceta;
+        COMMIT TRAN;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRAN;
+    END CATCH
+END
+GO
+----------------------------------------------------------------------------------------------------Listo
 --buscar ingredientes
 CREATE PROCEDURE GetIngredientByLike @like VARCHAR(15) AS
 BEGIN
@@ -216,19 +235,6 @@ BEGIN
     FROM @preparacion.nodes('/Preparacion/Paso') AS Tbl(Col);
 END
 GO
-
---eliminar receta
-CREATE PROCEDURE DeleteRecipe @idReceta INT
-AS
-BEGIN
-    DELETE FROM INGREDIENTES WHERE id_receta = @idReceta;
-
-    DELETE FROM PREPARACION WHERE id_receta = @idReceta;
-
-    DELETE FROM RECETAS WHERE ID_RECETA = @idReceta;
-END
-GO
-
 --Buscar chefs
 CREATE PROCEDURE GetChefByLike @like Varchar(15) AS
 BEGIN

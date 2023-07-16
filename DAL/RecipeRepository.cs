@@ -68,5 +68,31 @@ namespace DAL
                 }
             }
         }
+
+        public bool DeleteRecipe(int id)
+        {
+            using (var cnDb = Connection.GetConnection())
+            {
+                try
+                {
+                    using (var cmd = new SqlCommand("usp_DeleteRecipe", cnDb))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@idReceta", id);
+                        Connection.OpenConnection();
+                        cmd.ExecuteNonQuery();
+                        Connection.CloseConnection();
+                    }
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Connection.CloseConnection();
+                    return false;
+                }
+            }
+        }
     }
 }

@@ -17,5 +17,10 @@ namespace BLL
         {
             return _recipeRepository.AddRecipe(recipe);
         }
+
+        public bool DeleteRecipe(int id)
+        {
+            return _recipeRepository.DeleteRecipe(id);
+        }
     }
 }
