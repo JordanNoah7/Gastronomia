@@ -9,13 +9,14 @@ namespace PL
 {
     public partial class AddRecipe : Form
     {
-        private readonly CategoryService _categoryService = new CategoryService();
         private readonly Home _form;
+        private int i = 2;
+        private int location_y;
+        private readonly CategoryService _categoryService = new CategoryService();
+        private readonly RecipeService _recipeService = new RecipeService();
         private readonly PersonService _personService = new PersonService();
         private readonly ProductService _productService = new ProductService();
         private readonly UnitMeasureService _unitMeasureService = new UnitMeasureService();
-        private int i = 2;
-        private int location_y;
 
         public AddRecipe()
         {
@@ -164,6 +165,17 @@ namespace PL
             {
                 recipe.Preparacion.Rows.Add(it, step.Text);
                 it++;
+            }
+
+            if (_recipeService.AddRecipe(recipe))
+            {
+                MessageBox.Show("La receta se agregó correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Recipe fRecipe = new Recipe(_form);
+                _form.OpenForm(fRecipe);
+            }
+            else
+            {
+                MessageBox.Show("Hubo un error al agregar la receta.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

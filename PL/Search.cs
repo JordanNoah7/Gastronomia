@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Windows.Forms;
 using ML;
 
@@ -18,7 +19,18 @@ namespace PL
         {
             InitializeComponent();
             Text = title;
-            dgvDatos.DataSource = chefs;
+            tbFilter.TextChanged += TextBox_TextChanged;
+            dgvDatos.Columns.Clear();
+            DataTable dtPeople = new DataTable();
+            dtPeople.Columns.Add("ID_PERSONA", typeof(int));
+            dtPeople.Columns.Add("NOMBRES", typeof(string));
+            dtPeople.Columns.Add("APELLIDO_PATERNO", typeof(string));
+            dtPeople.Columns.Add("APELLIDO_MATERNO", typeof(string));
+            foreach (Person person in chefs)
+            {
+                dtPeople.Rows.Add(person.ID_PERSONA, person.NOMBRES, person.APELLIDO_PATERNO, person.APELLIDO_MATERNO);
+            }
+            dgvDatos.DataSource = dtPeople;
             foreach (DataGridViewColumn column in dgvDatos.Columns) column.Visible = false;
             dgvDatos.Columns["ID_PERSONA"].Visible = true;
             dgvDatos.Columns["ID_PERSONA"].HeaderText = "Nro";
@@ -34,7 +46,16 @@ namespace PL
         {
             InitializeComponent();
             Text = title;
-            dgvDatos.DataSource = products;
+            tbFilter.TextChanged += TextBox_TextChanged;
+            dgvDatos.Columns.Clear();
+            DataTable dtProducts = new DataTable();
+            dtProducts.Columns.Add("ID_PRODUCTO", typeof(int));
+            dtProducts.Columns.Add("NOMBRE", typeof(string));
+            foreach (Product product in products)
+            {
+                dtProducts.Rows.Add(product.ID_PRODUCTO, product.NOMBRE);
+            }
+            dgvDatos.DataSource = dtProducts;
             foreach (DataGridViewColumn column in dgvDatos.Columns) column.Visible = false;
             dgvDatos.Columns["ID_PRODUCTO"].Visible = true;
             dgvDatos.Columns["ID_PRODUCTO"].HeaderText = "Nro";
@@ -64,6 +85,24 @@ namespace PL
                     Close();
                     break;
             }
+        }
+
+        private void TextBox_TextChanged(object sender, EventArgs e)
+        {
+            string filter = tbFilter.Text;
+            switch (Text)
+            {
+                case "Chefs":
+                    (dgvDatos.DataSource as DataTable).DefaultView.RowFilter = $"NOMBRES LIKE '%{filter}%'";
+                    break;
+                case "Productos":
+                    (dgvDatos.DataSource as DataTable).DefaultView.RowFilter = $"NOMBRE LIKE '%{filter}%'";
+                    break;
+            }
+        }
+
+        private void Search_Load(object sender, EventArgs e)
+        {
         }
     }
 }

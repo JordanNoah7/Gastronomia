@@ -52,17 +52,17 @@ END
 GO
 ----------------------------------------------------------------------------------------------------Listo
 --obtener una lista de categorias para el combobox
-CREATE PROCEDURE  usp_GetCategories
+CREATE PROCEDURE usp_GetCategories
 AS
-    BEGIN 
-        SELECT C.ID_CATEGORIA,
-               C.NOMBRE_CATEGORIA
-        FROM CATEGORIAS C
-    END
-    GO
+BEGIN
+    SELECT C.ID_CATEGORIA,
+           C.NOMBRE_CATEGORIA
+    FROM CATEGORIAS C
+END
+GO
 ----------------------------------------------------------------------------------------------------Listo
 --obtener una lista de unidades de medida para el combobox
-alter PROCEDURE  usp_GetUnitMeasure
+alter PROCEDURE usp_GetUnitMeasure
 AS
 BEGIN
     SELECT UM.ID_UNIDAD_MEDIDA,
@@ -72,13 +72,69 @@ END
 GO
 ----------------------------------------------------------------------------------------------------Listo
 --obtener una lista de productos para el datagridview
-CREATE PROCEDURE  usp_GetProducts
+CREATE PROCEDURE usp_GetProducts
 AS
 BEGIN
     SELECT P.ID_PRODUCTO,
            P.NOMBRE
     FROM PRODUCTOS P
     WHERE P.STOCK > 0
+END
+GO
+----------------------------------------------------------------------------------------------------Listo
+--Creacion de tipo de dato para ingredientes
+CREATE TYPE IngredientesTableType AS TABLE
+(
+    ID_INGREDIENTE   BIGINT,
+    CANTIDAD         DECIMAL(10, 2),
+    ID_UNIDAD_MEDIDA BIGINT
+);
+GO
+----------------------------------------------------------------------------------------------------Listo
+--Creacion de tipo de dato para pasos de preparacion
+CREATE TYPE PreparacionTableType AS TABLE
+(
+    ID_PASO     BIGINT,
+    DESCRIPCION VARCHAR(500)
+);
+GO
+----------------------------------------------------------------------------------------------------Listo
+--Procedimiento para agregar receta
+CREATE PROCEDURE usp_AddRecipe @nombre Varchar(30),
+                               @descripcion Varchar(250),
+                               @tiempo_preparacion Varchar(10),
+                               @tiempo_coccion Varchar(10),
+                               @porciones Smallint,
+                               @dificultad Smallint,
+                               @id_categoria Bigint,
+                               @id_persona Bigint,
+                               @ingredientes IngredientesTableType READONLY,
+                               @preparacion PreparacionTableType READONLY
+AS
+BEGIN
+    BEGIN TRAN;
+    BEGIN TRY
+        DECLARE @ID_Receta BIGINT;
+
+        INSERT INTO RECETAS (NOMBRE_RECETA, DESCRIPCION, TIEMPO_PREPARACION, TIEMPO_COCCION, PORCIONES, DIFICULTAD,
+                             ID_CATEGORIA, ID_PERSONA)
+        VALUES (@nombre, @descripcion, @tiempo_preparacion, @tiempo_coccion, @porciones, @dificultad, @id_categoria,
+                @id_persona);
+
+        SET @ID_Receta = SCOPE_IDENTITY();
+
+        INSERT INTO INGREDIENTES (ID_INGREDIENTE, CANTIDAD, ID_UNIDAD_MEDIDA, ID_RECETA)
+        SELECT ID_INGREDIENTE, CANTIDAD, ID_UNIDAD_MEDIDA, @ID_Receta
+        FROM @ingredientes;
+
+        INSERT INTO PREPARACION (ID_RECETA, ID_PASO, DESCRIPCION)
+        SELECT @ID_Receta, ID_PASO, DESCRIPCION
+        FROM @preparacion;
+        COMMIT TRAN;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRAN;
+    END CATCH
 END
 GO
 ----------------------------------------------------------------------------------------------------Listo
@@ -90,44 +146,6 @@ BEGIN
     WHERE NOMBRE LIKE @like
 END
 GO
-
---Procedimiento para agregar receta
-CREATE PROCEDURE usp_AddRecipe @nombre Varchar(30),
-                               @descripcion Varchar(250),
-                               @tiempo_preparacion Varchar(10),
-                               @tiempo_coccion Varchar(10),
-                               @porciones Smallint,
-                               @dificultad Smallint,
-                               @id_categoria Bigint,
-                               @id_persona Bigint,
-                               @ingredientes XML,
-                               @preparacion XML
-AS
-BEGIN
-    DECLARE @ID_Receta BIGINT;
-
-    INSERT INTO RECETAS (NOMBRE_RECETA, DESCRIPCION, TIEMPO_PREPARACION, TIEMPO_COCCION, PORCIONES, DIFICULTAD,
-                         ID_CATEGORIA, ID_PERSONA)
-    VALUES (@nombre, @descripcion, @tiempo_preparacion, @tiempo_coccion, @porciones, @dificultad, @id_categoria,
-            @id_persona);
-
-    SET @ID_Receta = SCOPE_IDENTITY();
-
-    INSERT INTO INGREDIENTES (ID_INGREDIENTE, CANTIDAD, ID_UNIDAD_MEDIDA, ID_RECETA)
-    SELECT Tbl.Col.value('(ID)[1]', 'BIGINT'),
-           Tbl.Col.value('(Cantidad)[1]', 'DECIMAL(10,2)'),
-           Tbl.Col.value('(ID_UnidadMedida)[1]', 'BIGINT'),
-           @ID_Receta
-    FROM @ingredientes.nodes('/Ingredientes/Ingredientes') AS Tbl(Col);
-
-    INSERT INTO PREPARACION (ID_RECETA, ID_PASO, DESCRIPCION)
-    SELECT @ID_Receta,
-           Tbl.Col.value('(ID)[1]', 'BIGINT'),
-           Tbl.Col.value('(Descripcion)[1]', 'VARCHAR(250)')
-    FROM @preparacion.nodes('/Preparacion/Paso') AS Tbl(Col);
-END
-GO
-
 --Procedimiento para obtener una receta
 CREATE PROCEDURE GetRecipe @IDReceta INT
 AS

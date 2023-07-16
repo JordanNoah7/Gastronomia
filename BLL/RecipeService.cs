@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using DAL;
+using ML;
 
 namespace BLL
 {
@@ -10,6 +11,11 @@ namespace BLL
         public DataTable GetRecipes()
         {
             return _recipeRepository.GetRecipes();
+        }
+
+        public bool AddRecipe(Recipe recipe)
+        {
+            return _recipeRepository.AddRecipe(recipe);
         }
     }
 }
