@@ -146,7 +146,7 @@ go
 CREATE TABLE [UNIDAD_MEDIDA]
 (
     [ID_UNIDAD_MEDIDA] Bigint IDENTITY NOT NULL,
-    [NOMBRE]           Varchar(10)     NOT NULL,
+    [NOMBRE]           Varchar(25)     NOT NULL,
     [ABREVIATURA]      Varchar(5)      NOT NULL
 )
 go
@@ -228,10 +228,9 @@ CREATE TABLE [PREPARACION]
 (
     [ID_RECETA]   Bigint       NOT NULL,
     [ID_PASO]     Bigint       NOT NULL,
-    [DESCRIPCION] VARCHAR(250) NOT NULL
+    [DESCRIPCION] VARCHAR(500) NOT NULL
 )
 go
-
 -- Add keys for table PREPARACION
 
 ALTER TABLE [PREPARACION]

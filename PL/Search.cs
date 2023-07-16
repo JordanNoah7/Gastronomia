@@ -29,6 +29,18 @@ namespace PL
             dgvDatos.Columns["APELLIDO_MATERNO"].Visible = true;
             dgvDatos.Columns["APELLIDO_MATERNO"].HeaderText = "Apellido materno";
         }
+        
+        public Search(List<Product> products, string title)
+        {
+            InitializeComponent();
+            Text = title;
+            dgvDatos.DataSource = products;
+            foreach (DataGridViewColumn column in dgvDatos.Columns) column.Visible = false;
+            dgvDatos.Columns["ID_PRODUCTO"].Visible = true;
+            dgvDatos.Columns["ID_PRODUCTO"].HeaderText = "Nro";
+            dgvDatos.Columns["NOMBRE"].Visible = true;
+            dgvDatos.Columns["NOMBRE"].HeaderText = "Nombre";
+        }
 
         private void bCancel_Click(object sender, EventArgs e)
         {
@@ -37,11 +49,21 @@ namespace PL
 
         private void bAccept_Click(object sender, EventArgs e)
         {
-            Id = dgvDatos.CurrentRow.Cells["ID_PERSONA"].Value.ToString();
-            Fullname = dgvDatos.CurrentRow.Cells["NOMBRES"].Value + " " +
-                       dgvDatos.CurrentRow.Cells["APELLIDO_PATERNO"].Value + " " +
-                       dgvDatos.CurrentRow.Cells["APELLIDO_MATERNO"].Value;
-            Close();
+            switch (Text)
+            {
+                case "Chefs":
+                    Id = dgvDatos.CurrentRow.Cells["ID_PERSONA"].Value.ToString();
+                    Fullname = dgvDatos.CurrentRow.Cells["NOMBRES"].Value + " " +
+                               dgvDatos.CurrentRow.Cells["APELLIDO_PATERNO"].Value + " " +
+                               dgvDatos.CurrentRow.Cells["APELLIDO_MATERNO"].Value;
+                    Close();
+                    break;
+                case "Productos":
+                    Id = dgvDatos.CurrentRow.Cells["ID_PRODUCTO"].Value.ToString();
+                    Fullname = dgvDatos.CurrentRow.Cells["NOMBRE"].Value.ToString();
+                    Close();
+                    break;
+            }
         }
     }
 }

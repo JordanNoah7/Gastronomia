@@ -60,6 +60,28 @@ AS
         FROM CATEGORIAS C
     END
     GO
+----------------------------------------------------------------------------------------------------Listo
+--obtener una lista de unidades de medida para el combobox
+alter PROCEDURE  usp_GetUnitMeasure
+AS
+BEGIN
+    SELECT UM.ID_UNIDAD_MEDIDA,
+           UM.ABREVIATURA
+    FROM UNIDAD_MEDIDA UM
+END
+GO
+----------------------------------------------------------------------------------------------------Listo
+--obtener una lista de productos para el datagridview
+CREATE PROCEDURE  usp_GetProducts
+AS
+BEGIN
+    SELECT P.ID_PRODUCTO,
+           P.NOMBRE
+    FROM PRODUCTOS P
+    WHERE P.STOCK > 0
+END
+GO
+----------------------------------------------------------------------------------------------------Listo
 --buscar ingredientes
 CREATE PROCEDURE GetIngredientByLike @like VARCHAR(15) AS
 BEGIN

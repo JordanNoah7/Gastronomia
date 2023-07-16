@@ -39,13 +39,14 @@ namespace PL
             this.bCancel = new System.Windows.Forms.Button();
             this.bAddIngredient = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.dgvIngredients = new System.Windows.Forms.DataGridView();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.tbIdAutor = new System.Windows.Forms.TextBox();
             this.tbAutor = new System.Windows.Forms.TextBox();
             this.bSearchAutor = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.pSteps = new System.Windows.Forms.Panel();
+            this.tbStep1 = new System.Windows.Forms.TextBox();
             this.bAddStep = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.tbPortions = new System.Windows.Forms.TextBox();
@@ -59,10 +60,9 @@ namespace PL
             this.tbDescription = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.cbDifficulty = new System.Windows.Forms.ComboBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvIngredients)).BeginInit();
+            this.pSteps.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -83,6 +83,7 @@ namespace PL
             this.bSave.TabIndex = 7;
             this.bSave.Text = "Guardar";
             this.bSave.UseVisualStyleBackColor = true;
+            this.bSave.Click += new System.EventHandler(this.bSave_Click);
             // 
             // label2
             // 
@@ -128,15 +129,30 @@ namespace PL
             this.bAddIngredient.TabIndex = 12;
             this.bAddIngredient.Text = "+";
             this.bAddIngredient.UseVisualStyleBackColor = true;
+            this.bAddIngredient.Click += new System.EventHandler(this.bAddIngredient_Click);
             // 
             // panel1
             // 
             this.panel1.AutoScroll = true;
-            this.panel1.Controls.Add(this.dataGridView1);
+            this.panel1.Controls.Add(this.dgvIngredients);
             this.panel1.Location = new System.Drawing.Point(0, 239);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(392, 300);
             this.panel1.TabIndex = 13;
+            // 
+            // dgvIngredients
+            // 
+            this.dgvIngredients.AllowUserToAddRows = false;
+            this.dgvIngredients.AllowUserToResizeRows = false;
+            this.dgvIngredients.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvIngredients.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvIngredients.Location = new System.Drawing.Point(0, 0);
+            this.dgvIngredients.Name = "dgvIngredients";
+            this.dgvIngredients.Size = new System.Drawing.Size(392, 300);
+            this.dgvIngredients.TabIndex = 0;
+            this.dgvIngredients.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvIngredients_CellBeginEdit);
+            this.dgvIngredients.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvIngredients_CellEndEdit);
+            this.dgvIngredients.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgvIngredients_CellValidating);
             // 
             // label4
             // 
@@ -180,22 +196,22 @@ namespace PL
             this.bSearchAutor.UseVisualStyleBackColor = true;
             this.bSearchAutor.Click += new System.EventHandler(this.bSearchAutor_Click);
             // 
-            // panel2
+            // pSteps
             // 
-            this.panel2.AutoScroll = true;
-            this.panel2.Controls.Add(this.textBox4);
-            this.panel2.Location = new System.Drawing.Point(392, 239);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(392, 300);
-            this.panel2.TabIndex = 14;
+            this.pSteps.AutoScroll = true;
+            this.pSteps.Controls.Add(this.tbStep1);
+            this.pSteps.Location = new System.Drawing.Point(392, 239);
+            this.pSteps.Name = "pSteps";
+            this.pSteps.Size = new System.Drawing.Size(392, 300);
+            this.pSteps.TabIndex = 14;
             // 
-            // textBox4
+            // tbStep1
             // 
-            this.textBox4.Location = new System.Drawing.Point(6, 19);
-            this.textBox4.Multiline = true;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(374, 20);
-            this.textBox4.TabIndex = 3;
+            this.tbStep1.Location = new System.Drawing.Point(9, 9);
+            this.tbStep1.Multiline = true;
+            this.tbStep1.Name = "tbStep1";
+            this.tbStep1.Size = new System.Drawing.Size(374, 80);
+            this.tbStep1.TabIndex = 3;
             // 
             // bAddStep
             // 
@@ -205,6 +221,7 @@ namespace PL
             this.bAddStep.TabIndex = 19;
             this.bAddStep.Text = "+";
             this.bAddStep.UseVisualStyleBackColor = true;
+            this.bAddStep.Click += new System.EventHandler(this.bAddStep_Click);
             // 
             // label6
             // 
@@ -305,16 +322,6 @@ namespace PL
             this.cbDifficulty.Size = new System.Drawing.Size(185, 21);
             this.cbDifficulty.TabIndex = 32;
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(392, 300);
-            this.dataGridView1.TabIndex = 0;
-            // 
             // AddRecipe
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -333,7 +340,7 @@ namespace PL
             this.Controls.Add(this.tbPortions);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.bAddStep);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.pSteps);
             this.Controls.Add(this.bSearchAutor);
             this.Controls.Add(this.tbAutor);
             this.Controls.Add(this.tbIdAutor);
@@ -352,12 +359,11 @@ namespace PL
             this.Text = "AddRecipe";
             this.Load += new System.EventHandler(this.AddRecipe_Load);
             this.panel1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvIngredients)).EndInit();
+            this.pSteps.ResumeLayout(false);
+            this.pSteps.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         private System.Windows.Forms.TextBox tbCookingTime;
@@ -371,8 +377,8 @@ namespace PL
         private System.Windows.Forms.TextBox tbIdAutor;
         private System.Windows.Forms.TextBox tbAutor;
         private System.Windows.Forms.Button bSearchAutor;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Panel pSteps;
+        private System.Windows.Forms.TextBox tbStep1;
         private System.Windows.Forms.Button bAddStep;
         private System.Windows.Forms.Button bAddIngredient;
         private System.Windows.Forms.Panel panel1;
@@ -397,6 +403,6 @@ namespace PL
         private System.Windows.Forms.TextBox tbDescription;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox cbDifficulty;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvIngredients;
     }
 }
