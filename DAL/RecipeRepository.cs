@@ -120,6 +120,7 @@ namespace DAL
                                 recipe.PORCIONES = Convert.ToByte(dr["Porciones"]);
                                 recipe.DIFICULTAD = Convert.ToByte(dr["Dificultad"]);
                                 recipe.ID_CATEGORIA = Convert.ToInt32(dr["ID_CATEGORIA"]);
+                                recipe.Persona = dr["NOMBRES"] + " " + dr["APELLIDO_PATERNO"] + " " + dr["APELLIDO_MATERNO"];
                                 recipe.ID_PERSONA = Convert.ToInt32(dr["ID_PERSONA"]);
                             }
 

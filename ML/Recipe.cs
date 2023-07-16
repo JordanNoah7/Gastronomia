@@ -13,6 +13,7 @@ namespace ML
         public byte DIFICULTAD { get; set; }
         public int ID_CATEGORIA { get; set; }
         public int ID_PERSONA { get; set; }
+        public string Persona { get; set; }
         public DataTable Ingredientes { get; set; } = new DataTable();
         public DataTable Preparacion { get; set; } = new DataTable();
     }

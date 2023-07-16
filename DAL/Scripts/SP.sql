@@ -158,21 +158,25 @@ END
 GO
 ----------------------------------------------------------------------------------------------------Listo
 --Procedimiento para obtener una receta
-CREATE PROCEDURE usp_GetRecipe @IDReceta INT
+ALTER PROCEDURE usp_GetRecipe @IDReceta INT
 AS
 BEGIN
     BEGIN TRAN;
     BEGIN TRY
         SELECT
-            NOMBRE_RECETA,
-            Descripcion,
-            Tiempo_Preparacion,
-            Tiempo_Coccion,
-            Porciones,
-            Dificultad,
-            ID_CATEGORIA,
-            ID_PERSONA
-        FROM RECETAS
+            R.NOMBRE_RECETA,
+            R.Descripcion,
+            R.Tiempo_Preparacion,
+            R.Tiempo_Coccion,
+            R.Porciones,
+            R.Dificultad,
+            R.ID_CATEGORIA,
+            R.ID_PERSONA,
+            P.NOMBRES,
+            p.APELLIDO_PATERNO,
+            P.APELLIDO_MATERNO
+        FROM RECETAS R
+        JOIN PERSONAS P on P.ID_PERSONA = R.ID_PERSONA
         WHERE ID_RECETA = @IDReceta;
 
         SELECT i.ID_INGREDIENTE, P.NOMBRE, i.CANTIDAD, u.ID_UNIDAD_MEDIDA
