@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Drawing;
 using System.Windows.Forms;
 using BLL;
 using ML;
@@ -8,6 +9,8 @@ namespace PL
 {
     public partial class EditRecipe : Form
     {
+        private int i = 2;
+        private int location_y;
         private readonly Home _form;
         private readonly int _id;
         private readonly RecipeService _recipeService = new RecipeService();
@@ -77,7 +80,31 @@ namespace PL
 
             foreach (DataRow row in mRecipe.Ingredientes.Rows)
             {
-                //dgvIngredients
+                DataGridViewComboBoxCell dgvcbcUnitMeasure = new DataGridViewComboBoxCell();
+                dgvcbcUnitMeasure.DataSource = dgvcbcMeasure.DataSource;
+                dgvcbcUnitMeasure.DisplayMember = dgvcbcMeasure.DisplayMember;
+                dgvcbcUnitMeasure.ValueMember = dgvcbcMeasure.ValueMember;
+                dgvcbcUnitMeasure.Value = row["ID_UNIDAD_MEDIDA"];
+                dgvIngredients.Rows.Add(row["ID_INGREDIENTE"], row["NOMBRE"], row["CANTIDAD"], dgvcbcUnitMeasure);
+            }
+
+            int it = 1;
+            foreach (DataRow row in mRecipe.Preparacion.Rows)
+            {
+                if (it == 1)
+                {
+                    tbStep1.Text = row["Descripcion"].ToString();
+                    it++;
+                }
+                location_y = pSteps.Controls["tbStep" + (i - 1)].Location.Y + 89;
+                var tbNuevo = new TextBox();
+                tbNuevo.Name = "tbStep" + i;
+                tbNuevo.Location = new Point(tbStep1.Location.X, location_y);
+                tbNuevo.Multiline = true;
+                tbNuevo.Size = tbStep1.Size;
+                tbNuevo.Text = row["Descripcion"].ToString();
+                pSteps.Controls.Add(tbNuevo);
+                i++;
             }
         }
 

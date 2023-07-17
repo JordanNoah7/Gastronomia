@@ -45,7 +45,7 @@ namespace PL
             this.tbIdAutor = new System.Windows.Forms.TextBox();
             this.tbAutor = new System.Windows.Forms.TextBox();
             this.bSearchAutor = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.pSteps = new System.Windows.Forms.Panel();
             this.tbStep1 = new System.Windows.Forms.TextBox();
             this.bAddStep = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
@@ -63,7 +63,7 @@ namespace PL
             this.tbIdRecipe = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvIngredients)).BeginInit();
-            this.panel2.SuspendLayout();
+            this.pSteps.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -191,14 +191,14 @@ namespace PL
             this.bSearchAutor.UseVisualStyleBackColor = true;
             this.bSearchAutor.Click += new System.EventHandler(this.bSearchAutor_Click);
             // 
-            // panel2
+            // pSteps
             // 
-            this.panel2.AutoScroll = true;
-            this.panel2.Controls.Add(this.tbStep1);
-            this.panel2.Location = new System.Drawing.Point(392, 239);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(392, 300);
-            this.panel2.TabIndex = 14;
+            this.pSteps.AutoScroll = true;
+            this.pSteps.Controls.Add(this.tbStep1);
+            this.pSteps.Location = new System.Drawing.Point(392, 239);
+            this.pSteps.Name = "pSteps";
+            this.pSteps.Size = new System.Drawing.Size(392, 300);
+            this.pSteps.TabIndex = 14;
             // 
             // tbStep1
             // 
@@ -343,7 +343,7 @@ namespace PL
             this.Controls.Add(this.tbPortions);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.bAddStep);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.pSteps);
             this.Controls.Add(this.bSearchAutor);
             this.Controls.Add(this.tbAutor);
             this.Controls.Add(this.tbIdAutor);
@@ -363,8 +363,8 @@ namespace PL
             this.Load += new System.EventHandler(this.EditRecipe_Load);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvIngredients)).EndInit();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.pSteps.ResumeLayout(false);
+            this.pSteps.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
@@ -380,7 +380,7 @@ namespace PL
         private System.Windows.Forms.TextBox tbIdAutor;
         private System.Windows.Forms.TextBox tbAutor;
         private System.Windows.Forms.Button bSearchAutor;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel pSteps;
         private System.Windows.Forms.TextBox tbStep1;
         private System.Windows.Forms.Button bAddStep;
         private System.Windows.Forms.Button bAddIngredient;
