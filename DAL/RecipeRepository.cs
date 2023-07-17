@@ -182,7 +182,7 @@ namespace DAL
 
                     return true;
                 }
-                catch (Exception e)
+                catch (SqlException e)
                 {
                     Connection.CloseConnection();
                     return false;

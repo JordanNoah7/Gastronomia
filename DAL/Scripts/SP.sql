@@ -196,20 +196,22 @@ BEGIN
     END CATCH
 END
 GO
+select *
+from PERSONAS
 ----------------------------------------------------------------------------------------------------Listo
 --Procedimiento para actualizar la receta
 alter PROCEDURE usp_UpdateRecipe @idReceta INT,
-                                  @nombre Varchar(50),
-                                  @descripcion Varchar(500),
-                                  @tiempo_preparacion Varchar(15),
-                                  @tiempo_coccion Varchar(15),
-                                  @porciones Smallint,
-                                  @dificultad Smallint,
-                                  @id_categoria Bigint,
-                                  @id_persona Bigint,
-                                  @ingredientes IngredientesTableType READONLY,
-                                  @preparacion PreparacionTableType READONLY,
-                                  @concurrency TIMESTAMP
+                                 @nombre Varchar(50),
+                                 @descripcion Varchar(500),
+                                 @tiempo_preparacion Varchar(15),
+                                 @tiempo_coccion Varchar(15),
+                                 @porciones Smallint,
+                                 @dificultad Smallint,
+                                 @id_categoria Bigint,
+                                 @id_persona Bigint,
+                                 @ingredientes IngredientesTableType READONLY,
+                                 @preparacion PreparacionTableType READONLY,
+                                 @concurrency TIMESTAMP
 AS
 BEGIN
     BEGIN TRAN;
@@ -243,11 +245,13 @@ BEGIN
             END TRY
             BEGIN CATCH
                 ROLLBACK TRAN;
+                RAISERROR ('Problemas al actualizar el registro', 16, 1);
             END CATCH
         END
     ELSE
         BEGIN
             ROLLBACK TRAN;
+            RAISERROR ('Otro usuario actualizo el registro', 16, 1);
         END
 END
 GO

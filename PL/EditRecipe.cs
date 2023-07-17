@@ -9,8 +9,8 @@ namespace PL
 {
     public partial class EditRecipe : Form
     {
-        private int i = 2;
-        private int location_y;
+        //private int i = 2;
+        //private int location_y;
         private byte[] concurrency = new byte[8];
         private readonly Home _form;
         private readonly int _id;
