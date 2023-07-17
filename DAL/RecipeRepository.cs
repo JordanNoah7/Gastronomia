@@ -151,5 +151,41 @@ namespace DAL
                 }
             }
         }
+
+        public bool UpdateRecipe(Recipe recipe)
+        {
+            using (var cnDb = Connection.GetConnection())
+            {
+                try
+                {
+                    using (var cmd = new SqlCommand("usp_UpdateRecipe", cnDb))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@idReceta", recipe.ID_RECETA);
+                        cmd.Parameters.AddWithValue("@nombre", recipe.NOMBRE_RECETA);
+                        cmd.Parameters.AddWithValue("@descripcion", recipe.DESCRIPCION);
+                        cmd.Parameters.AddWithValue("@tiempo_preparacion", recipe.TIEMPO_PREPARACION);
+                        cmd.Parameters.AddWithValue("@tiempo_coccion", recipe.TIEMPO_COCCION);
+                        cmd.Parameters.AddWithValue("@porciones", recipe.PORCIONES);
+                        cmd.Parameters.AddWithValue("@dificultad", recipe.DIFICULTAD);
+                        cmd.Parameters.AddWithValue("@id_categoria", recipe.ID_CATEGORIA);
+                        cmd.Parameters.AddWithValue("@id_persona", recipe.ID_PERSONA);
+                        cmd.Parameters.AddWithValue("@ingredientes", recipe.Ingredientes);
+                        cmd.Parameters.AddWithValue("@preparacion", recipe.Preparacion);
+                        Connection.OpenConnection();
+                        cmd.ExecuteNonQuery();
+                        Connection.CloseConnection();
+                    }
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Connection.CloseConnection();
+                    return false;
+                }
+            }
+        }
     }
 }

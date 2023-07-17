@@ -26,6 +26,7 @@ namespace DAL
                                 unitMeasureList.Add(new UnitMeasure
                                 {
                                     ID_UNIDAD_MEDIDA = Convert.ToInt32(dr["ID_UNIDAD_MEDIDA"]),
+                                    NOMBRE = dr["NOMBRE"].ToString(),
                                     ABREVIATURA = dr["ABREVIATURA"].ToString()
                                 });
                         }

@@ -87,6 +87,7 @@ namespace PL
             this.bSave.TabIndex = 7;
             this.bSave.Text = "Guardar";
             this.bSave.UseVisualStyleBackColor = true;
+            this.bSave.Click += new System.EventHandler(this.bSave_Click);
             // 
             // label2
             // 

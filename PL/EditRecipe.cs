@@ -16,6 +16,7 @@ namespace PL
         private readonly RecipeService _recipeService = new RecipeService();
         private readonly CategoryService _categoryService = new CategoryService();
         private readonly UnitMeasureService _unitMeasureService = new UnitMeasureService();
+        private readonly PersonService _personService = new PersonService();
 
         public EditRecipe()
         {
@@ -124,6 +125,15 @@ namespace PL
         private void bSearchAutor_Click(object sender, EventArgs e)
         {
             //Search help = new Search(_personService.GetPerson())
+            var help = new Search(_personService.GetChefsByLike(""), "Chefs");
+            help.TopLevel = true;
+            help.FormBorderStyle = FormBorderStyle.None;
+            help.ShowDialog();
+            if (help.Id != "")
+            {
+                tbIdAutor.Text = help.Id;
+                tbAutor.Text = help.Fullname;
+            }
         }
 
         private void dgvIngredients_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -167,6 +177,52 @@ namespace PL
             if (!string.IsNullOrEmpty(help.step.ToString())) {
                 int i = dgvSteps.Rows.Add(help.step);
                 dgvSteps.AutoResizeRow(i);
+            }
+        }
+
+        private void bSave_Click(object sender, EventArgs e)
+        {
+            var recipe = new ML.Recipe();
+            recipe.ID_RECETA = Convert.ToInt32(tbIdRecipe.Text);
+            recipe.NOMBRE_RECETA = tbRecipeName.Text;
+            recipe.DESCRIPCION = tbDescription.Text;
+            recipe.TIEMPO_PREPARACION = tbPreparationTime.Text;
+            recipe.TIEMPO_COCCION = tbCookingTime.Text;
+            recipe.PORCIONES = Convert.ToByte(tbPortions.Text);
+            recipe.DIFICULTAD = Convert.ToByte(cbDifficulty.SelectedValue);
+            recipe.ID_CATEGORIA = Convert.ToInt32(cbCategory.SelectedValue);
+            recipe.ID_PERSONA = Convert.ToInt32(tbIdAutor.Text);
+
+            recipe.Ingredientes.Columns.Add("ID_INGREDIENTE", typeof(int));
+            recipe.Ingredientes.Columns.Add("CANTIDAD", typeof(float));
+            recipe.Ingredientes.Columns.Add("ID_UNIDAD_MEDIDA", typeof(int));
+
+            foreach (DataGridViewRow dgvIngredient in dgvIngredients.Rows)
+                recipe.Ingredientes.Rows.Add(dgvIngredient.Cells["ID_INGREDIENTE"].Value.ToString(),
+                    dgvIngredient.Cells["CANTIDAD"].Value.ToString(),
+                    dgvIngredient.Cells["ID_UNIDAD_MEDIDA"].Value.ToString());
+
+            recipe.Preparacion.Columns.Add("ID_PASO", typeof(int));
+            recipe.Preparacion.Columns.Add("DESCRIPCION", typeof(string));
+            var it = 1;
+            foreach (DataGridViewRow dgvStep in dgvSteps.Rows)
+            {
+                //recipe.Preparacion.Rows.Add(it, step.Text);
+                recipe.Preparacion.Rows.Add(it, dgvStep.Cells["DESCRIPCION"].Value.ToString());
+                it++;
+            }
+
+            if (_recipeService.UpdateRecipe(recipe))
+            {
+                MessageBox.Show("La receta se actualizó correctamente.", "Éxito", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                var fRecipe = new Recipe(_form);
+                _form.OpenForm(fRecipe);
+            }
+            else
+            {
+                MessageBox.Show("Hubo un error al actualizar la receta.", "Error", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
     }

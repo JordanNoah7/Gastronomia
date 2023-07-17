@@ -66,6 +66,7 @@ alter PROCEDURE usp_GetUnitMeasure
 AS
 BEGIN
     SELECT UM.ID_UNIDAD_MEDIDA,
+           UM.NOMBRE,
            UM.ABREVIATURA
     FROM UNIDAD_MEDIDA UM
 END
@@ -100,10 +101,10 @@ CREATE TYPE PreparacionTableType AS TABLE
 GO
 ----------------------------------------------------------------------------------------------------Listo
 --Procedimiento para agregar receta
-CREATE PROCEDURE usp_AddRecipe @nombre Varchar(30),
-                               @descripcion Varchar(250),
-                               @tiempo_preparacion Varchar(10),
-                               @tiempo_coccion Varchar(10),
+ALTER PROCEDURE usp_AddRecipe @nombre Varchar(50),
+                               @descripcion Varchar(500),
+                               @tiempo_preparacion Varchar(15),
+                               @tiempo_coccion Varchar(15),
                                @porciones Smallint,
                                @dificultad Smallint,
                                @id_categoria Bigint,
@@ -195,55 +196,60 @@ BEGIN
     END CATCH 
 END
 GO
+----------------------------------------------------------------------------------------------------Listo
+--Procedimiento para actualizar la receta
+ALTER PROCEDURE usp_UpdateRecipe @idReceta INT,
+                                  @nombre Varchar(50),
+                                  @descripcion Varchar(500),
+                                  @tiempo_preparacion Varchar(15),
+                                  @tiempo_coccion Varchar(15),
+                                  @porciones Smallint,
+                                  @dificultad Smallint,
+                                  @id_categoria Bigint,
+                                  @id_persona Bigint,
+                                  @ingredientes IngredientesTableType READONLY,
+                                  @preparacion PreparacionTableType READONLY
+AS
+BEGIN
+    BEGIN TRAN;
+    BEGIN TRY
+        UPDATE RECETAS
+        SET NOMBRE_RECETA      = @nombre,
+            descripcion        = @descripcion,
+            tiempo_preparacion = @tiempo_preparacion,
+            tiempo_coccion     = @tiempo_coccion,
+            porciones          = @porciones,
+            dificultad         = @dificultad,
+            ID_CATEGORIA       = @id_categoria,
+            ID_PERSONA         = @id_persona
+        WHERE ID_RECETA = @idReceta;
+
+        DELETE FROM Ingredientes WHERE ID_RECETA = @idReceta;
+
+        INSERT INTO INGREDIENTES (ID_INGREDIENTE, CANTIDAD, ID_UNIDAD_MEDIDA, ID_RECETA)
+        SELECT ID_INGREDIENTE, CANTIDAD, ID_UNIDAD_MEDIDA, @idReceta
+        FROM @ingredientes;
+
+        DELETE FROM Preparacion WHERE id_receta = @idReceta;
+
+        INSERT INTO PREPARACION (ID_RECETA, ID_PASO, DESCRIPCION)
+        SELECT @idReceta, ID_PASO, DESCRIPCION
+        FROM @preparacion;
+        
+        COMMIT TRAN;
+    END TRY
+    BEGIN CATCH 
+        ROLLBACK TRAN;
+    END CATCH 
+END
+GO
+----------------------------------------------------------------------------------------------------Listo
 --buscar ingredientes
 CREATE PROCEDURE GetIngredientByLike @like VARCHAR(15) AS
 BEGIN
     SELECT ID_PRODUCTO, NOMBRE
     FROM PRODUCTOS
     WHERE NOMBRE LIKE @like
-END
-GO
---Procedimiento para actualizar la receta
-CREATE PROCEDURE UpdateRecipe @idReceta INT,
-                              @nombre Varchar(30),
-                              @descripcion Varchar(250),
-                              @tiempo_preparacion Varchar(10),
-                              @tiempo_coccion Varchar(10),
-                              @porciones Smallint,
-                              @dificultad Smallint,
-                              @id_categoria Bigint,
-                              @id_persona Bigint,
-                              @ingredientes XML,
-                              @preparacion XML
-AS
-BEGIN
-    UPDATE RECETAS
-    SET NOMBRE_RECETA      = @nombre,
-        descripcion        = @descripcion,
-        tiempo_preparacion = @tiempo_preparacion,
-        tiempo_coccion     = @tiempo_coccion,
-        porciones          = @porciones,
-        dificultad         = @dificultad,
-        ID_CATEGORIA       = @id_categoria,
-        ID_PERSONA         = @id_persona
-    WHERE ID_RECETA = @idReceta;
-
-    DELETE FROM Ingredientes WHERE ID_RECETA = @idReceta;
-
-    INSERT INTO INGREDIENTES (ID_INGREDIENTE, CANTIDAD, ID_UNIDAD_MEDIDA, ID_RECETA)
-    SELECT Tbl.Col.value('(ID)[1]', 'BIGINT'),
-           Tbl.Col.value('(Cantidad)[1]', 'DECIMAL(10,2)'),
-           Tbl.Col.value('(ID_UnidadMedida)[1]', 'BIGINT'),
-           @idReceta
-    FROM @ingredientes.nodes('/Ingredientes/Ingredientes') AS Tbl(Col);
-
-    DELETE FROM Preparacion WHERE id_receta = @idReceta;
-
-    INSERT INTO PREPARACION (ID_RECETA, ID_PASO, DESCRIPCION)
-    SELECT @idReceta,
-           Tbl.Col.value('(ID)[1]', 'BIGINT'),
-           Tbl.Col.value('(Descripcion)[1]', 'VARCHAR(250)')
-    FROM @preparacion.nodes('/Preparacion/Paso') AS Tbl(Col);
 END
 GO
 --Buscar chefs

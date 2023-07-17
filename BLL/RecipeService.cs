@@ -27,5 +27,10 @@ namespace BLL
         {
             return _recipeRepository.GetRecipe(id);
         }
+
+        public bool UpdateRecipe(Recipe recipe)
+        {
+            return _recipeRepository.UpdateRecipe(recipe);
+        }
     }
 }
