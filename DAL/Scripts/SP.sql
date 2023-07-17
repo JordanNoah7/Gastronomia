@@ -243,6 +243,7 @@ BEGIN
     END CATCH 
 END
 GO
+insert into PRODUCTOS (NOMBRE, DESCRIPCION, STOCK) values ('Pimiento', 'Condimento para dar sabor.', 5)
 ----------------------------------------------------------------------------------------------------Listo
 --buscar ingredientes
 CREATE PROCEDURE GetIngredientByLike @like VARCHAR(15) AS
