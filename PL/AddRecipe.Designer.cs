@@ -46,7 +46,7 @@ namespace PL
             this.tbAutor = new System.Windows.Forms.TextBox();
             this.bSearchAutor = new System.Windows.Forms.Button();
             this.pSteps = new System.Windows.Forms.Panel();
-            this.tbStep1 = new System.Windows.Forms.TextBox();
+            this.dgvSteps = new System.Windows.Forms.DataGridView();
             this.bAddStep = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.tbPortions = new System.Windows.Forms.TextBox();
@@ -60,9 +60,12 @@ namespace PL
             this.tbDescription = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.cbDifficulty = new System.Windows.Forms.ComboBox();
+            this.bDeleteIngredient = new System.Windows.Forms.Button();
+            this.bDeleteStep = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvIngredients)).BeginInit();
             this.pSteps.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSteps)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -143,6 +146,7 @@ namespace PL
             // dgvIngredients
             // 
             this.dgvIngredients.AllowUserToAddRows = false;
+            this.dgvIngredients.AllowUserToDeleteRows = false;
             this.dgvIngredients.AllowUserToResizeRows = false;
             this.dgvIngredients.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvIngredients.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -199,19 +203,24 @@ namespace PL
             // pSteps
             // 
             this.pSteps.AutoScroll = true;
-            this.pSteps.Controls.Add(this.tbStep1);
+            this.pSteps.Controls.Add(this.dgvSteps);
             this.pSteps.Location = new System.Drawing.Point(392, 239);
             this.pSteps.Name = "pSteps";
             this.pSteps.Size = new System.Drawing.Size(392, 300);
             this.pSteps.TabIndex = 14;
             // 
-            // tbStep1
+            // dgvSteps
             // 
-            this.tbStep1.Location = new System.Drawing.Point(9, 9);
-            this.tbStep1.Multiline = true;
-            this.tbStep1.Name = "tbStep1";
-            this.tbStep1.Size = new System.Drawing.Size(374, 80);
-            this.tbStep1.TabIndex = 3;
+            this.dgvSteps.AllowUserToAddRows = false;
+            this.dgvSteps.AllowUserToDeleteRows = false;
+            this.dgvSteps.AllowUserToResizeColumns = false;
+            this.dgvSteps.AllowUserToResizeRows = false;
+            this.dgvSteps.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSteps.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvSteps.Location = new System.Drawing.Point(0, 0);
+            this.dgvSteps.Name = "dgvSteps";
+            this.dgvSteps.Size = new System.Drawing.Size(392, 300);
+            this.dgvSteps.TabIndex = 1;
             // 
             // bAddStep
             // 
@@ -322,11 +331,33 @@ namespace PL
             this.cbDifficulty.Size = new System.Drawing.Size(185, 21);
             this.cbDifficulty.TabIndex = 32;
             // 
+            // bDeleteIngredient
+            // 
+            this.bDeleteIngredient.Location = new System.Drawing.Point(158, 214);
+            this.bDeleteIngredient.Name = "bDeleteIngredient";
+            this.bDeleteIngredient.Size = new System.Drawing.Size(30, 23);
+            this.bDeleteIngredient.TabIndex = 33;
+            this.bDeleteIngredient.Text = "-";
+            this.bDeleteIngredient.UseVisualStyleBackColor = true;
+            this.bDeleteIngredient.Click += new System.EventHandler(this.bDeleteIngredient_Click);
+            // 
+            // bDeleteStep
+            // 
+            this.bDeleteStep.Location = new System.Drawing.Point(521, 214);
+            this.bDeleteStep.Name = "bDeleteStep";
+            this.bDeleteStep.Size = new System.Drawing.Size(30, 23);
+            this.bDeleteStep.TabIndex = 34;
+            this.bDeleteStep.Text = "-";
+            this.bDeleteStep.UseVisualStyleBackColor = true;
+            this.bDeleteStep.Click += new System.EventHandler(this.bDeleteStep_Click);
+            // 
             // AddRecipe
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.bDeleteStep);
+            this.Controls.Add(this.bDeleteIngredient);
             this.Controls.Add(this.cbDifficulty);
             this.Controls.Add(this.tbDescription);
             this.Controls.Add(this.label11);
@@ -361,9 +392,10 @@ namespace PL
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvIngredients)).EndInit();
             this.pSteps.ResumeLayout(false);
-            this.pSteps.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSteps)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         private System.Windows.Forms.TextBox tbCookingTime;
@@ -378,7 +410,6 @@ namespace PL
         private System.Windows.Forms.TextBox tbAutor;
         private System.Windows.Forms.Button bSearchAutor;
         private System.Windows.Forms.Panel pSteps;
-        private System.Windows.Forms.TextBox tbStep1;
         private System.Windows.Forms.Button bAddStep;
         private System.Windows.Forms.Button bAddIngredient;
         private System.Windows.Forms.Panel panel1;
@@ -404,5 +435,8 @@ namespace PL
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox cbDifficulty;
         private System.Windows.Forms.DataGridView dgvIngredients;
+        private System.Windows.Forms.Button bDeleteIngredient;
+        private System.Windows.Forms.Button bDeleteStep;
+        private System.Windows.Forms.DataGridView dgvSteps;
     }
 }

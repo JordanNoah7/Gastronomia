@@ -58,6 +58,31 @@ namespace PL
             dgvDatos.Columns["NOMBRE"].HeaderText = "Nombre";
         }
 
+        public Search(List<UnitMeasure> unitMeasure, string title)
+        {
+            InitializeComponent();
+            Text = title;
+            tbFilter.TextChanged += TextBox_TextChanged;
+            dgvDatos.Columns.Clear();
+
+            var dtProducts = new DataTable();
+            dtProducts.Columns.Add("ID_UNIDAD_MEDIDA", typeof(int));
+            dtProducts.Columns.Add("NOMBRE", typeof(string));
+            dtProducts.Columns.Add("ABREVIATURA", typeof(string));
+
+            foreach (var um in unitMeasure) dtProducts.Rows.Add(um.ID_UNIDAD_MEDIDA, um.NOMBRE, um.ABREVIATURA);
+            dgvDatos.DataSource = dtProducts;
+
+            foreach (DataGridViewColumn column in dgvDatos.Columns) column.Visible = false;
+
+            dgvDatos.Columns["ID_UNIDAD_MEDIDA"].Visible = true;
+            dgvDatos.Columns["ID_UNIDAD_MEDIDA"].HeaderText = "Nro";
+            dgvDatos.Columns["NOMBRE"].Visible = true;
+            dgvDatos.Columns["NOMBRE"].HeaderText = "Nombre";
+            dgvDatos.Columns["ABREVIATURA"].Visible = true;
+            dgvDatos.Columns["ABREVIATURA"].HeaderText = "Abreviatura";
+        }
+
         private void bCancel_Click(object sender, EventArgs e)
         {
             Close();
@@ -79,6 +104,11 @@ namespace PL
                     Fullname = dgvDatos.CurrentRow.Cells["NOMBRE"].Value.ToString();
                     Close();
                     break;
+                case "Unidades de medida":
+                    Id = dgvDatos.CurrentRow.Cells["ID_UNIDAD_MEDIDA"].Value.ToString();
+                    Fullname = dgvDatos.CurrentRow.Cells["ABREVIATURA"].Value.ToString();
+                    Close();
+                    break;
             }
         }
 
@@ -91,6 +121,9 @@ namespace PL
                     (dgvDatos.DataSource as DataTable).DefaultView.RowFilter = $"NOMBRES LIKE '%{filter}%'";
                     break;
                 case "Productos":
+                    (dgvDatos.DataSource as DataTable).DefaultView.RowFilter = $"NOMBRE LIKE '%{filter}%'";
+                    break;
+                case "Unidades de medida":
                     (dgvDatos.DataSource as DataTable).DefaultView.RowFilter = $"NOMBRE LIKE '%{filter}%'";
                     break;
             }

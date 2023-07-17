@@ -8,14 +8,14 @@ namespace PL
 {
     public partial class AddRecipe : Form
     {
-        private readonly CategoryService _categoryService = new CategoryService();
         private readonly Home _form;
+        private readonly CategoryService _categoryService = new CategoryService();
         private readonly PersonService _personService = new PersonService();
-        private readonly ProductService _productService = new ProductService();
         private readonly RecipeService _recipeService = new RecipeService();
-        private readonly UnitMeasureService _unitMeasureService = new UnitMeasureService();
-        private int i = 2;
-        private int location_y;
+        //private readonly ProductService _productService = new ProductService();
+        //private readonly UnitMeasureService _unitMeasureService = new UnitMeasureService();
+        //private int i = 2;
+        //private int location_y;
 
         public AddRecipe()
         {
@@ -46,25 +46,33 @@ namespace PL
             cbDifficulty.DataSource = dtDifficulty;
             cbDifficulty.DisplayMember = "Display";
             cbDifficulty.ValueMember = "Value";
-            cbDifficulty.SelectedIndex = 1;
+            cbDifficulty.SelectedIndex = 0;
 
-            var dgvcbcMeasure = new DataGridViewComboBoxColumn();
+            /*var dgvcbcMeasure = new DataGridViewComboBoxColumn();
             dgvcbcMeasure.HeaderText = "Unidad de medida";
             dgvcbcMeasure.Name = "ID_UNIDAD_MEDIDA";
             dgvcbcMeasure.DataSource = _unitMeasureService.GetUnitMeasures();
             dgvcbcMeasure.DisplayMember = "ABREVIATURA";
-            dgvcbcMeasure.ValueMember = "ID_UNIDAD_MEDIDA";
+            dgvcbcMeasure.ValueMember = "ID_UNIDAD_MEDIDA";*/
 
             dgvIngredients.Columns.Add("ID_INGREDIENTE", "ID_INGREDIENTE");
             dgvIngredients.Columns.Add("Ingrediente", "Ingrediente");
             dgvIngredients.Columns.Add("CANTIDAD", "Cantidad");
-            dgvIngredients.Columns.Add(dgvcbcMeasure);
+            dgvIngredients.Columns.Add("ID_UNIDAD_MEDIDA", "ID_UNIDAD_MEDIDA");
+            dgvIngredients.Columns.Add("UNIDAD_MEDIDA", "Unidad de medida");
             dgvIngredients.Columns["ID_INGREDIENTE"].Visible = false;
+            dgvIngredients.Columns["ID_UNIDAD_MEDIDA"].Visible = false;
             dgvIngredients.Columns["Ingrediente"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvIngredients.Columns["CANTIDAD"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            dgvIngredients.Columns["ID_UNIDAD_MEDIDA"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvIngredients.Columns["CANTIDAD"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvIngredients.Columns["UNIDAD_MEDIDA"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvIngredients.EnableHeadersVisualStyles = false;
             dgvIngredients.Columns["Ingrediente"].ReadOnly = true;
+            dgvIngredients.Columns["UNIDAD_MEDIDA"].ReadOnly = true;
+
+            dgvSteps.Columns.Clear();
+            dgvSteps.Columns.Add("DESCRIPCION", "Descripción");
+            dgvSteps.Columns["DESCRIPCION"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvSteps.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
         }
 
         private void dgvIngredients_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
@@ -78,7 +86,6 @@ namespace PL
                 }
                 else if (!float.TryParse(valor, out numero))
                 {
-                    //dgvIngredients.Rows[e.RowIndex].ErrorText = "Solo números.";
                     MessageBox.Show("Ingrese un valo numérico válido.");
                     e.Cancel = true;
                 }
@@ -117,23 +124,32 @@ namespace PL
 
         private void bAddIngredient_Click(object sender, EventArgs e)
         {
-            var help = new Search(_productService.GetProducts(), "Productos");
+            var help = new AddProduct();
             help.TopLevel = true;
             help.FormBorderStyle = FormBorderStyle.None;
             help.ShowDialog();
-            if (!string.IsNullOrEmpty(help.Id)) dgvIngredients.Rows.Add(help.Id, help.Fullname);
+            if (!string.IsNullOrEmpty(help.product)) dgvIngredients.Rows.Add(help.idProduct, help.product, "", help.idMeasure, help.measure);
         }
 
         private void bAddStep_Click(object sender, EventArgs e)
         {
-            location_y = pSteps.Controls["tbStep" + (i - 1)].Location.Y + 89;
+            /*location_y = pSteps.Controls["tbStep" + (i - 1)].Location.Y + 89;
             var tbNuevo = new TextBox();
             tbNuevo.Name = "tbStep" + i;
             tbNuevo.Location = new Point(tbStep1.Location.X, location_y);
             tbNuevo.Multiline = true;
             tbNuevo.Size = tbStep1.Size;
             pSteps.Controls.Add(tbNuevo);
-            i++;
+            i++;*/
+
+            var help = new AddStep();
+            help.TopLevel = true;
+            help.FormBorderStyle = FormBorderStyle.None;
+            help.ShowDialog();
+            if (!string.IsNullOrEmpty(help.step.ToString())) {
+                int i = dgvSteps.Rows.Add(help.step);
+                dgvSteps.AutoResizeRow(i);
+            } 
         }
 
         private void bSave_Click(object sender, EventArgs e)
@@ -160,9 +176,10 @@ namespace PL
             recipe.Preparacion.Columns.Add("ID_PASO", typeof(int));
             recipe.Preparacion.Columns.Add("DESCRIPCION", typeof(string));
             var it = 1;
-            foreach (Control step in pSteps.Controls)
+            foreach (DataGridViewRow dgvStep in dgvSteps.Rows)
             {
-                recipe.Preparacion.Rows.Add(it, step.Text);
+                //recipe.Preparacion.Rows.Add(it, step.Text);
+                recipe.Preparacion.Rows.Add(it, dgvStep.Cells["DESCRIPCION"].Value.ToString());
                 it++;
             }
 
@@ -177,6 +194,24 @@ namespace PL
             {
                 MessageBox.Show("Hubo un error al agregar la receta.", "Error", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+            }
+        }
+
+        private void bDeleteIngredient_Click(object sender, EventArgs e)
+        {
+            if(dgvIngredients.SelectedRows.Count > 0)
+            {
+                DataGridViewRow dgvr = dgvIngredients.SelectedRows[0];
+                dgvIngredients.Rows.Remove(dgvr);
+            }
+        }
+
+        private void bDeleteStep_Click(object sender, EventArgs e)
+        {
+            if (dgvSteps.SelectedRows.Count > 0)
+            {
+                DataGridViewRow dgvr = dgvSteps.SelectedRows[0];
+                dgvSteps.Rows.Remove(dgvr);
             }
         }
     }

@@ -49,26 +49,36 @@ namespace PL
             cbDifficulty.DisplayMember = "Display";
             cbDifficulty.ValueMember = "Value";
 
-            var dgvcbcMeasure = new DataGridViewComboBoxColumn();
+            /*var dgvcbcMeasure = new DataGridViewComboBoxColumn();
+            dgvcbcMeasure.DataPropertyName = "ID_UNIDAD_MEDIDA"; 
             dgvcbcMeasure.HeaderText = "Unidad de medida";
             dgvcbcMeasure.Name = "ID_UNIDAD_MEDIDA";
             dgvcbcMeasure.DataSource = _unitMeasureService.GetUnitMeasures();
             dgvcbcMeasure.DisplayMember = "ABREVIATURA";
-            dgvcbcMeasure.ValueMember = "ID_UNIDAD_MEDIDA";
+            dgvcbcMeasure.ValueMember = "ID_UNIDAD_MEDIDA";*/
 
             dgvIngredients.Columns.Add("ID_INGREDIENTE", "ID_INGREDIENTE");
             dgvIngredients.Columns.Add("Ingrediente", "Ingrediente");
             dgvIngredients.Columns.Add("CANTIDAD", "Cantidad");
-            dgvIngredients.Columns.Add(dgvcbcMeasure);
+            dgvIngredients.Columns.Add("ID_UNIDAD_MEDIDA", "ID_UNIDAD_MEDIDA");
+            dgvIngredients.Columns.Add("UNIDAD_MEDIDA", "Unidad de medida");
             dgvIngredients.Columns["ID_INGREDIENTE"].Visible = false;
+            dgvIngredients.Columns["ID_UNIDAD_MEDIDA"].Visible = false;
             dgvIngredients.Columns["Ingrediente"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvIngredients.Columns["Ingrediente"].ReadOnly = true;
-            dgvIngredients.Columns["CANTIDAD"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            dgvIngredients.Columns["ID_UNIDAD_MEDIDA"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvIngredients.Columns["CANTIDAD"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvIngredients.Columns["UNIDAD_MEDIDA"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvIngredients.EnableHeadersVisualStyles = false;
+            dgvIngredients.Columns["Ingrediente"].ReadOnly = true;
+            dgvIngredients.Columns["UNIDAD_MEDIDA"].ReadOnly = true;
+
+            dgvSteps.Columns.Clear();
+            dgvSteps.Columns.Add("DESCRIPCION", "Descripción");
+            dgvSteps.Columns["DESCRIPCION"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvSteps.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
             ML.Recipe mRecipe = _recipeService.GetRecipe(_id);
             tbIdRecipe.Text = mRecipe.ID_RECETA.ToString();
+            tbRecipeName.Text = mRecipe.NOMBRE_RECETA;
             tbIdAutor.Text = mRecipe.ID_PERSONA.ToString();
             tbAutor.Text = mRecipe.Persona;
             tbPortions.Text = mRecipe.PORCIONES.ToString();
@@ -80,18 +90,13 @@ namespace PL
 
             foreach (DataRow row in mRecipe.Ingredientes.Rows)
             {
-                DataGridViewComboBoxCell dgvcbcUnitMeasure = new DataGridViewComboBoxCell();
-                dgvcbcUnitMeasure.DataSource = dgvcbcMeasure.DataSource;
-                dgvcbcUnitMeasure.DisplayMember = dgvcbcMeasure.DisplayMember;
-                dgvcbcUnitMeasure.ValueMember = dgvcbcMeasure.ValueMember;
-                dgvcbcUnitMeasure.Value = row["ID_UNIDAD_MEDIDA"];
-                dgvIngredients.Rows.Add(row["ID_INGREDIENTE"], row["NOMBRE"], row["CANTIDAD"], dgvcbcUnitMeasure);
+                dgvIngredients.Rows.Add(row["ID_INGREDIENTE"], row["NOMBRE"], row["CANTIDAD"], row["ID_UNIDAD_MEDIDA"], row["ABREVIATURA"]);
             }
 
-            int it = 1;
+            //int it = 1;
             foreach (DataRow row in mRecipe.Preparacion.Rows)
             {
-                if (it == 1)
+                /*if (it == 1)
                 {
                     tbStep1.Text = row["Descripcion"].ToString();
                     it++;
@@ -104,7 +109,9 @@ namespace PL
                 tbNuevo.Size = tbStep1.Size;
                 tbNuevo.Text = row["Descripcion"].ToString();
                 pSteps.Controls.Add(tbNuevo);
-                i++;
+                i++;*/
+                int i = dgvSteps.Rows.Add(row["DESCRIPCION"]);
+                dgvSteps.AutoResizeRow(i);
             }
         }
 
@@ -117,6 +124,11 @@ namespace PL
         private void bSearchAutor_Click(object sender, EventArgs e)
         {
             //Search help = new Search(_personService.GetPerson())
+        }
+
+        private void dgvIngredients_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            e.Cancel = true;
         }
     }
 }
