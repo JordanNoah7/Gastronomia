@@ -130,5 +130,44 @@ namespace PL
         {
             e.Cancel = true;
         }
+
+        private void bAddIngredient_Click(object sender, EventArgs e)
+        {
+            var help = new AddProduct();
+            help.TopLevel = true;
+            help.FormBorderStyle = FormBorderStyle.None;
+            help.ShowDialog();
+            if (!string.IsNullOrEmpty(help.product)) dgvIngredients.Rows.Add(help.idProduct, help.product, "", help.idMeasure, help.measure);
+        }
+
+        private void bDeleteIngredient_Click(object sender, EventArgs e)
+        {
+            if(dgvIngredients.SelectedRows.Count > 0)
+            {
+                DataGridViewRow dgvr = dgvIngredients.SelectedRows[0];
+                dgvIngredients.Rows.Remove(dgvr);
+            }
+        }
+
+        private void bDeleteStep_Click(object sender, EventArgs e)
+        {
+            if (dgvSteps.SelectedRows.Count > 0)
+            {
+                DataGridViewRow dgvr = dgvSteps.SelectedRows[0];
+                dgvSteps.Rows.Remove(dgvr);
+            }
+        }
+
+        private void bAddStep_Click(object sender, EventArgs e)
+        {
+            var help = new AddStep();
+            help.TopLevel = true;
+            help.FormBorderStyle = FormBorderStyle.None;
+            help.ShowDialog();
+            if (!string.IsNullOrEmpty(help.step.ToString())) {
+                int i = dgvSteps.Rows.Add(help.step);
+                dgvSteps.AutoResizeRow(i);
+            }
+        }
     }
 }

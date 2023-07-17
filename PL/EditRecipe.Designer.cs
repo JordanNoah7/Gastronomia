@@ -46,6 +46,7 @@ namespace PL
             this.tbAutor = new System.Windows.Forms.TextBox();
             this.bSearchAutor = new System.Windows.Forms.Button();
             this.pSteps = new System.Windows.Forms.Panel();
+            this.dgvSteps = new System.Windows.Forms.DataGridView();
             this.bAddStep = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.tbPortions = new System.Windows.Forms.TextBox();
@@ -62,7 +63,6 @@ namespace PL
             this.tbIdRecipe = new System.Windows.Forms.TextBox();
             this.bDeleteStep = new System.Windows.Forms.Button();
             this.bDeleteIngredient = new System.Windows.Forms.Button();
-            this.dgvSteps = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvIngredients)).BeginInit();
             this.pSteps.SuspendLayout();
@@ -132,6 +132,7 @@ namespace PL
             this.bAddIngredient.TabIndex = 12;
             this.bAddIngredient.Text = "+";
             this.bAddIngredient.UseVisualStyleBackColor = true;
+            this.bAddIngredient.Click += new System.EventHandler(this.bAddIngredient_Click);
             // 
             // panel1
             // 
@@ -207,6 +208,19 @@ namespace PL
             this.pSteps.Size = new System.Drawing.Size(392, 300);
             this.pSteps.TabIndex = 14;
             // 
+            // dgvSteps
+            // 
+            this.dgvSteps.AllowUserToAddRows = false;
+            this.dgvSteps.AllowUserToDeleteRows = false;
+            this.dgvSteps.AllowUserToResizeColumns = false;
+            this.dgvSteps.AllowUserToResizeRows = false;
+            this.dgvSteps.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSteps.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvSteps.Location = new System.Drawing.Point(0, 0);
+            this.dgvSteps.Name = "dgvSteps";
+            this.dgvSteps.Size = new System.Drawing.Size(392, 300);
+            this.dgvSteps.TabIndex = 2;
+            // 
             // bAddStep
             // 
             this.bAddStep.Location = new System.Drawing.Point(485, 214);
@@ -215,6 +229,7 @@ namespace PL
             this.bAddStep.TabIndex = 19;
             this.bAddStep.Text = "+";
             this.bAddStep.UseVisualStyleBackColor = true;
+            this.bAddStep.Click += new System.EventHandler(this.bAddStep_Click);
             // 
             // label6
             // 
@@ -331,6 +346,7 @@ namespace PL
             this.bDeleteStep.TabIndex = 36;
             this.bDeleteStep.Text = "-";
             this.bDeleteStep.UseVisualStyleBackColor = true;
+            this.bDeleteStep.Click += new System.EventHandler(this.bDeleteStep_Click);
             // 
             // bDeleteIngredient
             // 
@@ -340,19 +356,7 @@ namespace PL
             this.bDeleteIngredient.TabIndex = 35;
             this.bDeleteIngredient.Text = "-";
             this.bDeleteIngredient.UseVisualStyleBackColor = true;
-            // 
-            // dgvSteps
-            // 
-            this.dgvSteps.AllowUserToAddRows = false;
-            this.dgvSteps.AllowUserToDeleteRows = false;
-            this.dgvSteps.AllowUserToResizeColumns = false;
-            this.dgvSteps.AllowUserToResizeRows = false;
-            this.dgvSteps.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvSteps.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvSteps.Location = new System.Drawing.Point(0, 0);
-            this.dgvSteps.Name = "dgvSteps";
-            this.dgvSteps.Size = new System.Drawing.Size(392, 300);
-            this.dgvSteps.TabIndex = 2;
+            this.bDeleteIngredient.Click += new System.EventHandler(this.bDeleteIngredient_Click);
             // 
             // EditRecipe
             // 
@@ -399,7 +403,6 @@ namespace PL
             ((System.ComponentModel.ISupportInitialize)(this.dgvSteps)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         private System.Windows.Forms.TextBox tbCookingTime;
