@@ -96,12 +96,12 @@ GO
 CREATE TYPE PreparacionTableType AS TABLE
 (
     ID_PASO     BIGINT,
-    DESCRIPCION VARCHAR(500)
+    DESCRIPCION NVARCHAR(MAX)
 );
 GO
 ----------------------------------------------------------------------------------------------------Listo
 --Procedimiento para agregar receta
-ALTER PROCEDURE usp_AddRecipe @nombre Varchar(50),
+CREATE PROCEDURE usp_AddRecipe @nombre Varchar(50),
                                @descripcion Varchar(500),
                                @tiempo_preparacion Varchar(15),
                                @tiempo_coccion Varchar(15),
@@ -125,12 +125,12 @@ BEGIN
         SET @ID_Receta = SCOPE_IDENTITY();
 
         INSERT INTO INGREDIENTES (ID_INGREDIENTE, CANTIDAD, ID_UNIDAD_MEDIDA, ID_RECETA)
-        SELECT ID_INGREDIENTE, CANTIDAD, ID_UNIDAD_MEDIDA, @ID_Receta
-        FROM @ingredientes;
+        SELECT I.ID_INGREDIENTE, I.CANTIDAD, I.ID_UNIDAD_MEDIDA, @ID_Receta
+        FROM @ingredientes I; 
 
         INSERT INTO PREPARACION (ID_RECETA, ID_PASO, DESCRIPCION)
-        SELECT @ID_Receta, ID_PASO, DESCRIPCION
-        FROM @preparacion;
+        SELECT @ID_Receta, P.ID_PASO, P.DESCRIPCION
+        FROM @preparacion P;
         COMMIT TRAN;
     END TRY
     BEGIN CATCH
@@ -198,7 +198,7 @@ END
 GO
 ----------------------------------------------------------------------------------------------------Listo
 --Procedimiento para actualizar la receta
-ALTER PROCEDURE usp_UpdateRecipe @idReceta INT,
+CREATE PROCEDURE usp_UpdateRecipe @idReceta INT,
                                   @nombre Varchar(50),
                                   @descripcion Varchar(500),
                                   @tiempo_preparacion Varchar(15),
@@ -227,14 +227,14 @@ BEGIN
         DELETE FROM Ingredientes WHERE ID_RECETA = @idReceta;
 
         INSERT INTO INGREDIENTES (ID_INGREDIENTE, CANTIDAD, ID_UNIDAD_MEDIDA, ID_RECETA)
-        SELECT ID_INGREDIENTE, CANTIDAD, ID_UNIDAD_MEDIDA, @idReceta
-        FROM @ingredientes;
+        SELECT I.ID_INGREDIENTE, I.CANTIDAD, I.ID_UNIDAD_MEDIDA, @idReceta
+        FROM @ingredientes I;
 
         DELETE FROM Preparacion WHERE id_receta = @idReceta;
 
         INSERT INTO PREPARACION (ID_RECETA, ID_PASO, DESCRIPCION)
-        SELECT @idReceta, ID_PASO, DESCRIPCION
-        FROM @preparacion;
+        SELECT @idReceta, P.ID_PASO, P.DESCRIPCION
+        FROM @preparacion P;
         
         COMMIT TRAN;
     END TRY
