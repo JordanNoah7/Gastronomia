@@ -166,6 +166,8 @@ namespace PL
             this.Controls.Add(this.pVentana);
             this.Controls.Add(this.panel1);
             this.Location = new System.Drawing.Point(15, 15);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Home";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.Home_Load);
