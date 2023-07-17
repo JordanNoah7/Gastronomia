@@ -47,5 +47,10 @@ namespace PL
             Close();
             _login.Show();
         }
+
+        private void Home_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _login.Close();
+        }
     }
 }
