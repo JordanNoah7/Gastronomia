@@ -14,6 +14,7 @@ namespace ML
         public int ID_CATEGORIA { get; set; }
         public int ID_PERSONA { get; set; }
         public string Persona { get; set; }
+        public byte[] concurrency { get; set; } = new byte[8];
         public DataTable Ingredientes { get; set; } = new DataTable();
         public DataTable Preparacion { get; set; } = new DataTable();
     }

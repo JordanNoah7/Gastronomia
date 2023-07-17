@@ -126,7 +126,7 @@ BEGIN
 
         INSERT INTO INGREDIENTES (ID_INGREDIENTE, CANTIDAD, ID_UNIDAD_MEDIDA, ID_RECETA)
         SELECT I.ID_INGREDIENTE, I.CANTIDAD, I.ID_UNIDAD_MEDIDA, @ID_Receta
-        FROM @ingredientes I; 
+        FROM @ingredientes I;
 
         INSERT INTO PREPARACION (ID_RECETA, ID_PASO, DESCRIPCION)
         SELECT @ID_Receta, P.ID_PASO, P.DESCRIPCION
@@ -164,20 +164,20 @@ AS
 BEGIN
     BEGIN TRAN;
     BEGIN TRY
-        SELECT
-            R.NOMBRE_RECETA,
-            R.Descripcion,
-            R.Tiempo_Preparacion,
-            R.Tiempo_Coccion,
-            R.Porciones,
-            R.Dificultad,
-            R.ID_CATEGORIA,
-            R.ID_PERSONA,
-            P.NOMBRES,
-            p.APELLIDO_PATERNO,
-            P.APELLIDO_MATERNO
+        SELECT R.NOMBRE_RECETA,
+               R.Descripcion,
+               R.Tiempo_Preparacion,
+               R.Tiempo_Coccion,
+               R.Porciones,
+               R.Dificultad,
+               R.ID_CATEGORIA,
+               R.ID_PERSONA,
+               R.concurrency,
+               P.NOMBRES,
+               p.APELLIDO_PATERNO,
+               P.APELLIDO_MATERNO
         FROM RECETAS R
-        JOIN PERSONAS P on P.ID_PERSONA = R.ID_PERSONA
+                 JOIN PERSONAS P on P.ID_PERSONA = R.ID_PERSONA
         WHERE ID_RECETA = @IDReceta;
 
         SELECT i.ID_INGREDIENTE, P.NOMBRE, i.CANTIDAD, u.ID_UNIDAD_MEDIDA, u.ABREVIATURA
@@ -191,14 +191,14 @@ BEGIN
         WHERE P.ID_Receta = @IDReceta;
         COMMIT TRAN;
     END TRY
-    BEGIN CATCH 
+    BEGIN CATCH
         ROLLBACK TRAN;
-    END CATCH 
+    END CATCH
 END
 GO
 ----------------------------------------------------------------------------------------------------Listo
 --Procedimiento para actualizar la receta
-CREATE PROCEDURE usp_UpdateRecipe @idReceta INT,
+alter PROCEDURE usp_UpdateRecipe @idReceta INT,
                                   @nombre Varchar(50),
                                   @descripcion Varchar(500),
                                   @tiempo_preparacion Varchar(15),
@@ -208,42 +208,51 @@ CREATE PROCEDURE usp_UpdateRecipe @idReceta INT,
                                   @id_categoria Bigint,
                                   @id_persona Bigint,
                                   @ingredientes IngredientesTableType READONLY,
-                                  @preparacion PreparacionTableType READONLY
+                                  @preparacion PreparacionTableType READONLY,
+                                  @concurrency TIMESTAMP
 AS
 BEGIN
     BEGIN TRAN;
-    BEGIN TRY
-        UPDATE RECETAS
-        SET NOMBRE_RECETA      = @nombre,
-            descripcion        = @descripcion,
-            tiempo_preparacion = @tiempo_preparacion,
-            tiempo_coccion     = @tiempo_coccion,
-            porciones          = @porciones,
-            dificultad         = @dificultad,
-            ID_CATEGORIA       = @id_categoria,
-            ID_PERSONA         = @id_persona
-        WHERE ID_RECETA = @idReceta;
+    IF @concurrency = (SELECT concurrency FROM RECETAS WHERE ID_RECETA = @idReceta)
+        BEGIN
+            BEGIN TRY
+                UPDATE RECETAS
+                SET NOMBRE_RECETA      = @nombre,
+                    descripcion        = @descripcion,
+                    tiempo_preparacion = @tiempo_preparacion,
+                    tiempo_coccion     = @tiempo_coccion,
+                    porciones          = @porciones,
+                    dificultad         = @dificultad,
+                    ID_CATEGORIA       = @id_categoria,
+                    ID_PERSONA         = @id_persona
+                WHERE ID_RECETA = @idReceta;
 
-        DELETE FROM Ingredientes WHERE ID_RECETA = @idReceta;
+                DELETE FROM Ingredientes WHERE ID_RECETA = @idReceta;
 
-        INSERT INTO INGREDIENTES (ID_INGREDIENTE, CANTIDAD, ID_UNIDAD_MEDIDA, ID_RECETA)
-        SELECT I.ID_INGREDIENTE, I.CANTIDAD, I.ID_UNIDAD_MEDIDA, @idReceta
-        FROM @ingredientes I;
+                INSERT INTO INGREDIENTES (ID_INGREDIENTE, CANTIDAD, ID_UNIDAD_MEDIDA, ID_RECETA)
+                SELECT I.ID_INGREDIENTE, I.CANTIDAD, I.ID_UNIDAD_MEDIDA, @idReceta
+                FROM @ingredientes I;
 
-        DELETE FROM Preparacion WHERE id_receta = @idReceta;
+                DELETE FROM Preparacion WHERE id_receta = @idReceta;
 
-        INSERT INTO PREPARACION (ID_RECETA, ID_PASO, DESCRIPCION)
-        SELECT @idReceta, P.ID_PASO, P.DESCRIPCION
-        FROM @preparacion P;
-        
-        COMMIT TRAN;
-    END TRY
-    BEGIN CATCH 
-        ROLLBACK TRAN;
-    END CATCH 
+                INSERT INTO PREPARACION (ID_RECETA, ID_PASO, DESCRIPCION)
+                SELECT @idReceta, P.ID_PASO, P.DESCRIPCION
+                FROM @preparacion P;
+
+                COMMIT TRAN;
+            END TRY
+            BEGIN CATCH
+                ROLLBACK TRAN;
+            END CATCH
+        END
+    ELSE
+        BEGIN
+            ROLLBACK TRAN;
+        END
 END
 GO
-insert into PRODUCTOS (NOMBRE, DESCRIPCION, STOCK) values ('Pimiento', 'Condimento para dar sabor.', 5)
+insert into PRODUCTOS (NOMBRE, DESCRIPCION, STOCK)
+values ('Pimiento', 'Condimento para dar sabor.', 5)
 ----------------------------------------------------------------------------------------------------Listo
 --buscar ingredientes
 CREATE PROCEDURE GetIngredientByLike @like VARCHAR(15) AS

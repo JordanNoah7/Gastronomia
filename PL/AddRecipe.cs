@@ -25,6 +25,7 @@ namespace PL
         public AddRecipe(Home form)
         {
             _form = form;
+            _form.Text = "Añadir Receta";
             InitializeComponent();
         }
 

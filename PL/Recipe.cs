@@ -18,6 +18,7 @@ namespace PL
         public Recipe(Home form)
         {
             _form = form;
+            _form.Text = "Recetas";
             InitializeComponent();
         }
 

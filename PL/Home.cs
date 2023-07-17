@@ -6,15 +6,17 @@ namespace PL
 {
     public partial class Home : Form
     {
+        private Login _login;
         public Home()
         {
             InitializeComponent();
         }
 
-        public Home(string name)
+        public Home(string name, Login login)
         {
             InitializeComponent();
             lName.Text = name;
+            _login = login;
         }
 
         internal void OpenForm(Form form)
@@ -38,6 +40,12 @@ namespace PL
         {
             var recipe = new Recipe(this);
             OpenForm(recipe);
+        }
+
+        private void bLogout_Click(object sender, EventArgs e)
+        {
+            Close();
+            _login.Show();
         }
     }
 }

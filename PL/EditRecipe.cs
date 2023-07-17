@@ -11,6 +11,7 @@ namespace PL
     {
         private int i = 2;
         private int location_y;
+        private byte[] concurrency = new byte[8];
         private readonly Home _form;
         private readonly int _id;
         private readonly RecipeService _recipeService = new RecipeService();
@@ -27,6 +28,7 @@ namespace PL
         {
             _form = form;
             _id = id;
+            _form.Text = "Editar Receta";
             InitializeComponent();
         }
 
@@ -88,6 +90,7 @@ namespace PL
             cbCategory.SelectedValue = mRecipe.ID_CATEGORIA;
             cbDifficulty.SelectedValue = mRecipe.DIFICULTAD;
             tbDescription.Text = mRecipe.DESCRIPCION;
+            Array.Copy(mRecipe.concurrency, concurrency, 8);
 
             foreach (DataRow row in mRecipe.Ingredientes.Rows)
             {
@@ -192,6 +195,7 @@ namespace PL
             recipe.DIFICULTAD = Convert.ToByte(cbDifficulty.SelectedValue);
             recipe.ID_CATEGORIA = Convert.ToInt32(cbCategory.SelectedValue);
             recipe.ID_PERSONA = Convert.ToInt32(tbIdAutor.Text);
+            Array.Copy(concurrency, recipe.concurrency, 8);
 
             recipe.Ingredientes.Columns.Add("ID_INGREDIENTE", typeof(int));
             recipe.Ingredientes.Columns.Add("CANTIDAD", typeof(float));
@@ -223,6 +227,8 @@ namespace PL
             {
                 MessageBox.Show("Hubo un error al actualizar la receta.", "Error", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+                var fRecipe = new Recipe(_form);
+                _form.OpenForm(fRecipe);
             }
         }
     }

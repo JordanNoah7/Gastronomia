@@ -55,11 +55,25 @@ namespace PL
 
         private void bAccept_Click(object sender, System.EventArgs e)
         {
-            idProduct = Convert.ToInt32(tbIdProduct.Text);
-            idMeasure = Convert.ToInt32(tbIdMeasure.Text);
-            product = tbProduct.Text;
-            measure = tbMeasure.Text;
-            Close();
+            if (!string.IsNullOrEmpty(tbProduct.Text))
+            {
+                if (!string.IsNullOrEmpty(tbMeasure.Text))
+                {
+                    idProduct = Convert.ToInt32(tbIdProduct.Text);
+                    idMeasure = Convert.ToInt32(tbIdMeasure.Text);
+                    product = tbProduct.Text;
+                    measure = tbMeasure.Text;
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show("No ha seleccionado ninguna unidad de medida, por favor seleccionar una.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("No ha seleccionado ningun producto, por favor seleccionar uno.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

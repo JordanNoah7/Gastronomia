@@ -31,7 +31,9 @@ namespace PL
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.bLogout = new System.Windows.Forms.Button();
             this.lName = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.bCourses = new System.Windows.Forms.Button();
@@ -47,6 +49,7 @@ namespace PL
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left)));
+            this.panel1.Controls.Add(this.bLogout);
             this.panel1.Controls.Add(this.lName);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.bCourses);
@@ -59,6 +62,18 @@ namespace PL
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(200, 561);
             this.panel1.TabIndex = 0;
+            // 
+            // bLogout
+            // 
+            this.bLogout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.bLogout.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bLogout.Location = new System.Drawing.Point(0, 511);
+            this.bLogout.Name = "bLogout";
+            this.bLogout.Size = new System.Drawing.Size(200, 50);
+            this.bLogout.TabIndex = 8;
+            this.bLogout.Text = "CERRAR SESION";
+            this.bLogout.UseVisualStyleBackColor = true;
+            this.bLogout.Click += new System.EventHandler(this.bLogout_Click);
             // 
             // lName
             // 
@@ -165,6 +180,7 @@ namespace PL
             this.ClientSize = new System.Drawing.Size(984, 561);
             this.Controls.Add(this.pVentana);
             this.Controls.Add(this.panel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(15, 15);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -174,6 +190,8 @@ namespace PL
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.Button bLogout;
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lName;

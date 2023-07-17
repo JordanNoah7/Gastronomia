@@ -120,6 +120,7 @@ namespace DAL
                                 recipe.PORCIONES = Convert.ToByte(dr["Porciones"]);
                                 recipe.DIFICULTAD = Convert.ToByte(dr["Dificultad"]);
                                 recipe.ID_CATEGORIA = Convert.ToInt32(dr["ID_CATEGORIA"]);
+                                Array.Copy((byte[])dr["concurrency"], recipe.concurrency, 8);
                                 recipe.Persona = dr["NOMBRES"] + " " + dr["APELLIDO_PATERNO"] + " " + dr["APELLIDO_MATERNO"];
                                 recipe.ID_PERSONA = Convert.ToInt32(dr["ID_PERSONA"]);
                             }
@@ -173,6 +174,7 @@ namespace DAL
                         cmd.Parameters.AddWithValue("@id_persona", recipe.ID_PERSONA);
                         cmd.Parameters.AddWithValue("@ingredientes", recipe.Ingredientes);
                         cmd.Parameters.AddWithValue("@preparacion", recipe.Preparacion);
+                        cmd.Parameters.AddWithValue("@concurrency", recipe.concurrency);
                         Connection.OpenConnection();
                         cmd.ExecuteNonQuery();
                         Connection.CloseConnection();

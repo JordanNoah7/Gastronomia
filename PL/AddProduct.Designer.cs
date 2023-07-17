@@ -65,6 +65,7 @@ namespace PL
             // 
             // tbProduct
             // 
+            this.tbProduct.Enabled = false;
             this.tbProduct.Location = new System.Drawing.Point(80, 40);
             this.tbProduct.Name = "tbProduct";
             this.tbProduct.Size = new System.Drawing.Size(147, 20);
@@ -107,6 +108,7 @@ namespace PL
             // 
             // tbMeasure
             // 
+            this.tbMeasure.Enabled = false;
             this.tbMeasure.Location = new System.Drawing.Point(80, 76);
             this.tbMeasure.Name = "tbMeasure";
             this.tbMeasure.Size = new System.Drawing.Size(147, 20);
@@ -165,7 +167,6 @@ namespace PL
             this.Load += new System.EventHandler(this.AddProduct_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion

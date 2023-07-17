@@ -17,6 +17,7 @@ namespace PL
 
         private void Login_Load(object sender, EventArgs e)
         {
+            Text = "Iniciar Sesión";
         }
 
         private void bLogin_Click(object sender, EventArgs e)
@@ -32,9 +33,12 @@ namespace PL
                 if (tbPassword.Text.Equals(_person.CONTRASENA))
                 {
                     _person = _personService.GetPerson(tbUsername.Text, tbPassword.Text);
-                    var home = new Home(_person.NOMBRES);
+                    var home = new Home(_person.NOMBRES, this);
                     Hide();
                     home.Show();
+
+                    tbUsername.Text = "";
+                    tbPassword.Text = "";
                 }
                 else
                 {
