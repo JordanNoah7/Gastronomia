@@ -84,7 +84,7 @@ namespace PL
             this.bSave.Location = new System.Drawing.Point(621, 10);
             this.bSave.Name = "bSave";
             this.bSave.Size = new System.Drawing.Size(75, 23);
-            this.bSave.TabIndex = 7;
+            this.bSave.TabIndex = 14;
             this.bSave.Text = "Guardar";
             this.bSave.UseVisualStyleBackColor = true;
             this.bSave.Click += new System.EventHandler(this.bSave_Click);
@@ -120,7 +120,7 @@ namespace PL
             this.bCancel.Location = new System.Drawing.Point(702, 10);
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(75, 23);
-            this.bCancel.TabIndex = 8;
+            this.bCancel.TabIndex = 15;
             this.bCancel.Text = "Cancelar";
             this.bCancel.UseVisualStyleBackColor = true;
             this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
@@ -130,13 +130,14 @@ namespace PL
             this.bAddIngredient.Location = new System.Drawing.Point(122, 214);
             this.bAddIngredient.Name = "bAddIngredient";
             this.bAddIngredient.Size = new System.Drawing.Size(30, 23);
-            this.bAddIngredient.TabIndex = 12;
+            this.bAddIngredient.TabIndex = 10;
             this.bAddIngredient.Text = "+";
             this.bAddIngredient.UseVisualStyleBackColor = true;
             this.bAddIngredient.Click += new System.EventHandler(this.bAddIngredient_Click);
             // 
             // panel1
             // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left)));
             this.panel1.AutoScroll = true;
             this.panel1.Controls.Add(this.dgvIngredients);
             this.panel1.Location = new System.Drawing.Point(0, 239);
@@ -178,6 +179,7 @@ namespace PL
             // 
             // tbIdAutor
             // 
+            this.tbIdAutor.Enabled = false;
             this.tbIdAutor.Location = new System.Drawing.Point(135, 64);
             this.tbIdAutor.Name = "tbIdAutor";
             this.tbIdAutor.Size = new System.Drawing.Size(32, 20);
@@ -188,20 +190,21 @@ namespace PL
             this.tbAutor.Location = new System.Drawing.Point(173, 64);
             this.tbAutor.Name = "tbAutor";
             this.tbAutor.Size = new System.Drawing.Size(147, 20);
-            this.tbAutor.TabIndex = 17;
+            this.tbAutor.TabIndex = 2;
             // 
             // bSearchAutor
             // 
             this.bSearchAutor.Location = new System.Drawing.Point(326, 64);
             this.bSearchAutor.Name = "bSearchAutor";
             this.bSearchAutor.Size = new System.Drawing.Size(30, 23);
-            this.bSearchAutor.TabIndex = 18;
+            this.bSearchAutor.TabIndex = 3;
             this.bSearchAutor.Text = "...";
             this.bSearchAutor.UseVisualStyleBackColor = true;
             this.bSearchAutor.Click += new System.EventHandler(this.bSearchAutor_Click);
             // 
             // pSteps
             // 
+            this.pSteps.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.pSteps.AutoScroll = true;
             this.pSteps.Controls.Add(this.dgvSteps);
             this.pSteps.Location = new System.Drawing.Point(392, 239);
@@ -227,7 +230,7 @@ namespace PL
             this.bAddStep.Location = new System.Drawing.Point(485, 214);
             this.bAddStep.Name = "bAddStep";
             this.bAddStep.Size = new System.Drawing.Size(30, 23);
-            this.bAddStep.TabIndex = 19;
+            this.bAddStep.TabIndex = 11;
             this.bAddStep.Text = "+";
             this.bAddStep.UseVisualStyleBackColor = true;
             this.bAddStep.Click += new System.EventHandler(this.bAddStep_Click);
@@ -246,14 +249,14 @@ namespace PL
             this.tbPortions.Location = new System.Drawing.Point(135, 86);
             this.tbPortions.Name = "tbPortions";
             this.tbPortions.Size = new System.Drawing.Size(185, 20);
-            this.tbPortions.TabIndex = 21;
+            this.tbPortions.TabIndex = 4;
             // 
             // tbCookingTime
             // 
             this.tbCookingTime.Location = new System.Drawing.Point(135, 108);
             this.tbCookingTime.Name = "tbCookingTime";
             this.tbCookingTime.Size = new System.Drawing.Size(185, 20);
-            this.tbCookingTime.TabIndex = 23;
+            this.tbCookingTime.TabIndex = 5;
             // 
             // label7
             // 
@@ -266,10 +269,11 @@ namespace PL
             // 
             // tbPreparationTime
             // 
+            this.tbPreparationTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tbPreparationTime.Location = new System.Drawing.Point(549, 108);
             this.tbPreparationTime.Name = "tbPreparationTime";
             this.tbPreparationTime.Size = new System.Drawing.Size(185, 20);
-            this.tbPreparationTime.TabIndex = 25;
+            this.tbPreparationTime.TabIndex = 8;
             // 
             // label8
             // 
@@ -282,6 +286,7 @@ namespace PL
             // 
             // label9
             // 
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.label9.Location = new System.Drawing.Point(388, 86);
             this.label9.Name = "label9";
@@ -291,6 +296,7 @@ namespace PL
             // 
             // label10
             // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.label10.Location = new System.Drawing.Point(388, 64);
             this.label10.Name = "label10";
@@ -300,19 +306,21 @@ namespace PL
             // 
             // cbCategory
             // 
+            this.cbCategory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbCategory.FormattingEnabled = true;
             this.cbCategory.Location = new System.Drawing.Point(549, 64);
             this.cbCategory.Name = "cbCategory";
             this.cbCategory.Size = new System.Drawing.Size(185, 21);
-            this.cbCategory.TabIndex = 29;
+            this.cbCategory.TabIndex = 6;
             // 
             // tbDescription
             // 
+            this.tbDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.tbDescription.Location = new System.Drawing.Point(15, 152);
             this.tbDescription.Multiline = true;
             this.tbDescription.Name = "tbDescription";
             this.tbDescription.Size = new System.Drawing.Size(719, 60);
-            this.tbDescription.TabIndex = 31;
+            this.tbDescription.TabIndex = 9;
             // 
             // label11
             // 
@@ -325,11 +333,12 @@ namespace PL
             // 
             // cbDifficulty
             // 
+            this.cbDifficulty.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbDifficulty.FormattingEnabled = true;
             this.cbDifficulty.Location = new System.Drawing.Point(549, 86);
             this.cbDifficulty.Name = "cbDifficulty";
             this.cbDifficulty.Size = new System.Drawing.Size(185, 21);
-            this.cbDifficulty.TabIndex = 32;
+            this.cbDifficulty.TabIndex = 7;
             // 
             // tbIdRecipe
             // 
@@ -344,7 +353,7 @@ namespace PL
             this.bDeleteStep.Location = new System.Drawing.Point(521, 214);
             this.bDeleteStep.Name = "bDeleteStep";
             this.bDeleteStep.Size = new System.Drawing.Size(30, 23);
-            this.bDeleteStep.TabIndex = 36;
+            this.bDeleteStep.TabIndex = 13;
             this.bDeleteStep.Text = "-";
             this.bDeleteStep.UseVisualStyleBackColor = true;
             this.bDeleteStep.Click += new System.EventHandler(this.bDeleteStep_Click);
@@ -354,7 +363,7 @@ namespace PL
             this.bDeleteIngredient.Location = new System.Drawing.Point(158, 214);
             this.bDeleteIngredient.Name = "bDeleteIngredient";
             this.bDeleteIngredient.Size = new System.Drawing.Size(30, 23);
-            this.bDeleteIngredient.TabIndex = 35;
+            this.bDeleteIngredient.TabIndex = 12;
             this.bDeleteIngredient.Text = "-";
             this.bDeleteIngredient.UseVisualStyleBackColor = true;
             this.bDeleteIngredient.Click += new System.EventHandler(this.bDeleteIngredient_Click);
