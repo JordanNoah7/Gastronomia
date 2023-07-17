@@ -110,7 +110,7 @@ namespace PL
                 tbNuevo.Text = row["Descripcion"].ToString();
                 pSteps.Controls.Add(tbNuevo);
                 i++;*/
-                int i = dgvSteps.Rows.Add(row["DESCRIPCION"]);
+                int i = dgvSteps.Rows.Add(row["Descripcion"]);
                 dgvSteps.AutoResizeRow(i);
             }
         }

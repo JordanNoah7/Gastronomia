@@ -125,9 +125,19 @@ namespace DAL
                             }
 
                             dr.NextResult();
-                            recipe.Ingredientes.Load(dr);
-                            dr.NextResult();
-                            recipe.Preparacion.Load(dr);
+                            if (dr.HasRows)
+                            {
+                                DataTable dt = new DataTable();
+                                dt.Load(dr);
+                                recipe.Ingredientes = dt;
+                            }
+                            //dr.NextResult();
+                            if (dr.HasRows)
+                            {
+                                DataTable dt = new DataTable();
+                                dt.Load(dr);
+                                recipe.Preparacion = dt;
+                            }
                         }
                         Connection.CloseConnection();
                     }

@@ -185,9 +185,9 @@ BEGIN
                  JOIN PRODUCTOS P on P.ID_PRODUCTO = i.ID_INGREDIENTE
         WHERE i.ID_Receta = @IDReceta;
 
-        SELECT ID_PASO, Descripcion
-        FROM PREPARACION
-        WHERE ID_Receta = @IDReceta;
+        SELECT P.ID_PASO, P.Descripcion
+        FROM PREPARACION P
+        WHERE P.ID_Receta = @IDReceta;
         COMMIT TRAN;
     END TRY
     BEGIN CATCH 
